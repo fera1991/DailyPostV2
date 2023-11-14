@@ -8,7 +8,7 @@ export default function OptionsBarsUser({owned=()=>{},favorite=()=>{}}) {
     const navigate = useNavigate();
 
     const logoutFuntion = () => {
-        context.logout(); 
+        //context.logout(); 
         navigate("/");  
     }
     
