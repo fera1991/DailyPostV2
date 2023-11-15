@@ -1,7 +1,11 @@
 package com.squad8.dailypost.models.entities;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,17 +22,10 @@ import lombok.ToString;
 
 
 @Entity
-@ToString(exclude = {"posts"})
+@ToString(exclude = {"posts","tokens"})
 @Data
 @Table(name = "users")
-public class User {
-
-	public User(String username, String email, String password) {
-		super();
-		this.username = username;
-		this.email = email;
-		this.password = password;
-	}
+public class User implements UserDetails{
 
 	@Id
 	@Column(name = "id_user")
@@ -45,8 +42,52 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	
+	@Column(name = "active", insertable = false)
+	private Boolean active;
+	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Post> posts;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Token> tokens;
+	
+	public User(String username, String email, String password) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+	
+	public User() {
+    }
+	
+	private static final long serialVersionUID = 1460435087476558985L;
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return this.active;
+	}
 	
 }
