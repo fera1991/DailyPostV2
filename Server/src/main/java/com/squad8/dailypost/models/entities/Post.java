@@ -32,6 +32,8 @@ public class Post {
 		this.description = description;
 		this.user = user;
 	}
+	public Post() {
+    }
 
 	@Id
 	@Column(name = "id_post")
