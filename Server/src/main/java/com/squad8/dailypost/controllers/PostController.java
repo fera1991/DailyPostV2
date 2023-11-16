@@ -44,7 +44,7 @@ public class PostController {
 	@Autowired
 	private RequestErrorHandler errorHandler;
 	
-	@PostMapping("/")
+	@PostMapping("/create")
 	public ResponseEntity<?> savePost(@RequestBody @Valid SavePostDTO info, BindingResult validations, HttpServletRequest request){
 		
 		if(validations.hasErrors()) {
@@ -78,6 +78,23 @@ public class PostController {
 	@GetMapping("/all")
 	public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size){
 		Page<Post> posts = postService.findAll(page, size);
+		return new ResponseEntity<>(new PageDTO<>(
+				posts.getContent(),
+				posts.getNumber(),
+				posts.getSize(),
+				posts.getTotalElements(),
+				posts.getTotalPages()
+				)
+				,HttpStatus.OK);
+	}
+	
+	@GetMapping("/owned")
+	public ResponseEntity<?> findOwn(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size, HttpServletRequest request){
+		String tokenHeader = request.getHeader("Authorization");
+		String token = tokenHeader.substring(7);
+		
+		User user = userService.findOneByIdentifier(jwtTools.getUsernameFrom(token));
+		Page<Post> posts = postService.getPaginatedList(user.getPosts(), page, size);
 		return new ResponseEntity<>(new PageDTO<>(
 				posts.getContent(),
 				posts.getNumber(),

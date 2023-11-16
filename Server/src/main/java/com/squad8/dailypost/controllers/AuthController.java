@@ -33,7 +33,7 @@ public class AuthController {
 	@Autowired
 	private RequestErrorHandler errorHandler;
 	
-	@PostMapping("/login")
+	@PostMapping("/signin")
 	public ResponseEntity<?> login(@RequestBody @Valid LoginDTO info, BindingResult validations){
 		
 		if(validations.hasErrors()) {
