@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,6 +68,43 @@ public class PostController {
 			postService.save(info, user);
 			return new ResponseEntity<>(
 					new MessageDTO("Post Created"), HttpStatus.CREATED);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(
+					new MessageDTO("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	@PutMapping("/update/{id}")
+	public ResponseEntity<?> updatePost(@RequestBody @Valid SavePostDTO info,  BindingResult validations, @PathVariable(name = "id") String code, HttpServletRequest request){
+		if(validations.hasErrors()) {
+			return new ResponseEntity<>(
+					errorHandler.mapErrors(validations.getFieldErrors()), 
+					HttpStatus.BAD_REQUEST);
+		}
+		Post post = postService.findOneById(code);
+		if(post == null) {
+			return new ResponseEntity<>(new MessageDTO("Post Not Found"),HttpStatus.NOT_FOUND);
+		}
+		String tokenHeader = request.getHeader("Authorization");
+		String token = tokenHeader.substring(7);
+		
+		User user = userService.findOneByIdentifier(jwtTools.getUsernameFrom(token));
+		
+		if(user == null) {
+			return new ResponseEntity<>(new MessageDTO("User Not Found"),HttpStatus.NOT_FOUND);
+		}
+		
+		if(user != post.getUser()) {
+			return new ResponseEntity<>(new MessageDTO("Access denied. You do not have the necessary permissions to modify this post"),HttpStatus.FORBIDDEN);
+		}
+		
+		try {
+			postService.update(post, info);
+			return new ResponseEntity<>(
+					new MessageDTO("Post updated"), HttpStatus.OK);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
