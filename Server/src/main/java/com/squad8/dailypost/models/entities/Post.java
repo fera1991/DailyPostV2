@@ -47,7 +47,7 @@ public class Post {
 	@Column(name = "description")
     private String description;
 	
-	@Column(name = "isArchived")
+	@Column(name = "is_archived")
     private boolean isArchived;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
