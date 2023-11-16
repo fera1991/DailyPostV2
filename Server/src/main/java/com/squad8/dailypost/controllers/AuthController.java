@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.squad8.dailypost.models.dtos.LoginDTO;
 import com.squad8.dailypost.models.dtos.MessageDTO;
 import com.squad8.dailypost.models.dtos.SaveUserDTO;
+import com.squad8.dailypost.models.dtos.TokenDTO;
+import com.squad8.dailypost.models.entities.Token;
 import com.squad8.dailypost.models.entities.User;
 import com.squad8.dailypost.services.UserService;
 import com.squad8.dailypost.utils.RequestErrorHandler;
@@ -29,6 +32,34 @@ public class AuthController {
 	
 	@Autowired
 	private RequestErrorHandler errorHandler;
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestBody @Valid LoginDTO info, BindingResult validations){
+		
+		if(validations.hasErrors()) {
+			return new ResponseEntity<>(
+					errorHandler.mapErrors(validations.getFieldErrors()), 
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		User user = userService.findOneByIdentifier(info.getUsername());
+		
+		if(user == null) {
+			return new ResponseEntity<>(new MessageDTO("User Not Found"),HttpStatus.NOT_FOUND);
+		}
+		
+		if(!userService.comparePassword(info.getPassword(), user.getPassword())) {
+			return new ResponseEntity<>(new MessageDTO("the password is not the same"),HttpStatus.UNAUTHORIZED);
+		}
+		
+		try {
+			Token token = userService.registerToken(user);
+			return new ResponseEntity<>(new TokenDTO(token), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestBody @Valid SaveUserDTO info, BindingResult validations){
