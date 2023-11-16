@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.squad8.dailypost.models.dtos.MessageDTO;
+import com.squad8.dailypost.models.dtos.PageDTO;
 import com.squad8.dailypost.models.dtos.SavePostDTO;
 import com.squad8.dailypost.models.entities.Post;
 import com.squad8.dailypost.models.entities.User;
@@ -76,7 +78,14 @@ public class PostController {
 	@GetMapping("/all")
 	public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size){
 		Page<Post> posts = postService.findAll(page, size);
-		return new ResponseEntity<>(posts,HttpStatus.OK);
+		return new ResponseEntity<>(new PageDTO<>(
+				posts.getContent(),
+				posts.getNumber(),
+				posts.getSize(),
+				posts.getTotalElements(),
+				posts.getTotalPages()
+				)
+				,HttpStatus.OK);
 	}
 	
 	
