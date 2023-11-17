@@ -3,10 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 export default function PostCard() {
 
-
-
-
-
     return (
         <div class="container mx-auto px-20">
             <div class="min-h-48 flex items-center justify-center p-20 px-6" style="cursor: auto;">
