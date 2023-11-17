@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.squad8.dailypost.models.dtos.MessageDTO;
 import com.squad8.dailypost.models.dtos.PageDTO;
 import com.squad8.dailypost.models.dtos.SavePostDTO;
+import com.squad8.dailypost.models.entities.Favorite;
+import com.squad8.dailypost.models.entities.Like;
 import com.squad8.dailypost.models.entities.Post;
 import com.squad8.dailypost.models.entities.User;
+import com.squad8.dailypost.services.LikeService;
 import com.squad8.dailypost.services.PostService;
 import com.squad8.dailypost.services.UserService;
 import com.squad8.dailypost.utils.JWTTools;
@@ -37,6 +40,9 @@ public class PostController {
 	
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private LikeService likeService;
 	
 	@Autowired
 	private UserService userService;
@@ -174,6 +180,48 @@ public class PostController {
 				postService.toggleArchived(post, true);
 				return new ResponseEntity<>(
 						new MessageDTO("Post Archived"), HttpStatus.OK);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(
+					new MessageDTO("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PatchMapping("like/{id}")
+	public ResponseEntity<?> toggleLike(@PathVariable(name = "id") String code, HttpServletRequest request){
+		Post post = postService.findOneById(code);
+		if(post == null) {
+			return new ResponseEntity<>(new MessageDTO("Post Not Found"),HttpStatus.NOT_FOUND);
+		}
+		String tokenHeader = request.getHeader("Authorization");
+		String token = tokenHeader.substring(7);
+		
+		User user = userService.findOneByIdentifier(jwtTools.getUsernameFrom(token));
+		
+		if(user == null) {
+			return new ResponseEntity<>(new MessageDTO("User Not Found"),HttpStatus.NOT_FOUND);
+		}
+		
+		Boolean flag = false;
+		String idLike = "";
+		for (Like element: post.getLikes()) {
+			if(element.getUser().equals(user)) {
+				flag = true;
+				idLike = element.getCode().toString();
+			}
+		}
+		
+		try {
+			if(!flag) {
+				likeService.save(post, user);
+				return new ResponseEntity<>(
+						new MessageDTO("The post has been Liked "), HttpStatus.CREATED);
+			}else {
+				likeService.deleteById(idLike);
+				return new ResponseEntity<>(
+						new MessageDTO("The post has been removed from your Likes."), HttpStatus.CREATED);
 			}
 			
 		} catch (Exception e) {

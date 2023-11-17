@@ -22,6 +22,10 @@ public class Like {
 		this.post = post;
 		this.user = user;
 	}
+	
+	public Like() {
+
+	}
 
 	@Id
 	@Column(name = "id_like")
