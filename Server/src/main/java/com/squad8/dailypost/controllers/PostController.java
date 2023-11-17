@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -144,5 +145,41 @@ public class PostController {
 				,HttpStatus.OK);
 	}
 	
-	
+	@PatchMapping("toggle/{id}")
+	public ResponseEntity<?> togglePostVisibility(@PathVariable(name = "id") String code, HttpServletRequest request){
+		Post post = postService.findOneById(code);
+		if(post == null) {
+			return new ResponseEntity<>(new MessageDTO("Post Not Found"),HttpStatus.NOT_FOUND);
+		}
+		String tokenHeader = request.getHeader("Authorization");
+		String token = tokenHeader.substring(7);
+		
+		User user = userService.findOneByIdentifier(jwtTools.getUsernameFrom(token));
+		
+		if(user == null) {
+			return new ResponseEntity<>(new MessageDTO("User Not Found"),HttpStatus.NOT_FOUND);
+		}
+		
+		if(user != post.getUser()) {
+			return new ResponseEntity<>(new MessageDTO("Access denied. You do not have the necessary permissions to modify this post"),HttpStatus.FORBIDDEN);
+		}
+		
+		try {
+			if(post.isArchived()) {
+				postService.toggleArchived(post, false);
+				return new ResponseEntity<>(
+						new MessageDTO("Post active"), HttpStatus.OK);
+			}
+			else {
+				postService.toggleArchived(post, true);
+				return new ResponseEntity<>(
+						new MessageDTO("Post Archived"), HttpStatus.OK);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(
+					new MessageDTO("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

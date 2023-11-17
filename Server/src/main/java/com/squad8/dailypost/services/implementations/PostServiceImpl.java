@@ -60,6 +60,7 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
+	@Transactional(rollbackOn = Exception.class)
 	public void update(Post post, @Valid SavePostDTO info) throws Exception {
 		Post updatePost = post;
 		updatePost.setTitle(info.getTitle());
@@ -77,6 +78,14 @@ public class PostServiceImpl implements PostService{
         PageRequest pageRequest = PageRequest.of(page, size);
         
         return new PageImpl<>(sublist, pageRequest, list.size());
+	}
+
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public void toggleArchived(Post post, boolean Status) throws Exception {
+		Post updatePost = post;
+		updatePost.setArchived(Status);
+		postRepository.save(updatePost);
 	}
 
 }
