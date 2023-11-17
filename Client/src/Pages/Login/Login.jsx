@@ -39,6 +39,7 @@ export default function Login() {
   const { register, handleSubmit, } = useForm();
 
   return (
+    
     <div className=" flex justify-center items-center min-h-screen bg-purple-50">
       <main className="bg-white max-w-lg p-8 md:p-12 my-10 rounded-sm shadow-2xl m-4">
         <img src={DailyPost_logo} alt="Daily Post"></img>
