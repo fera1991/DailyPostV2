@@ -73,7 +73,7 @@ public class AuthController {
 		
 		if(response != null) {
 			return new ResponseEntity<>(
-	                new MessageDTO("Email already exists"), HttpStatus.ACCEPTED);
+	                new MessageDTO("Email already exists"), HttpStatus.CONFLICT);
 		}
 		
 		try { 
