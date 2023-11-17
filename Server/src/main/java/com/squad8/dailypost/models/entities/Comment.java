@@ -19,11 +19,14 @@ import lombok.Data;
 public class Comment {
 	
 	
-	public Comment(Post post, String text) {
+	public Comment(Post post, User user,String text) {
 		super();
 		this.post = post;
+		this.user = user;
 		this.text = text;
 	}
+	
+	public Comment() {}
 
 	@Id
 	@Column(name = "id_comment")
@@ -36,7 +39,7 @@ public class Comment {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_user", nullable = true)
-	private Post user;
+	private User user;
     
     @Column(name = "text")
     private String text;
