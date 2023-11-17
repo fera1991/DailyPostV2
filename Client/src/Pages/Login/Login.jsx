@@ -39,18 +39,18 @@ export default function Login() {
   const { register, handleSubmit, } = useForm();
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-purple-50">
+    <div className=" flex justify-center items-center min-h-screen bg-purple-50">
       <main className="bg-white max-w-lg p-8 md:p-12 my-10 rounded-sm shadow-2xl m-4">
         <img src={DailyPost_logo} alt="Daily Post"></img>
         <label className="font-sans text-gray-500 pt-2 mt-4">Login to your acount</label>
         <form className="flex flex-col justify-center" onSubmit={handleSubmit(onSubmit)}>
           {Error === true && <div className="text-red-500 text-xs">Inicio de sesion fallido</div>}
           <div className=" flex items-center">
-            <div className="grid-rows">
+            <div className="grid-rows ">
               <FontAwesomeIcon className="w-5 h-5 mr-2  mt-3" icon={faUser} />
             </div>
             <div>
-              <input className="font-sans bg-gray-100 border w-full h-5 px-32 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="text" placeholder="User or email" {...register("user", { required: true })}>
+              <input className=" font-sans bg-gray-100 border h-5 w-96 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="text" placeholder="User or email" {...register("user", { required: true })}>
               </input>
             </div>
           </div>
@@ -59,7 +59,7 @@ export default function Login() {
               <FontAwesomeIcon className=" w-5 h-5 mr-2 mt-5" icon={faKey} />
             </div>
             <div className='text-left'>
-              <input className="font-sans block bg-gray-100 border w-full h-5 px-32 py-4 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="password" placeholder="Password"  {...register("password", { required: true })}>
+              <input className="font-sans block bg-gray-100 border h-5 w-96 py-4 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="password" placeholder="Password"  {...register("password", { required: true })}>
               </input>
             </div>
           </div>
