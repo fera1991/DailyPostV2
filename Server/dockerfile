@@ -1,26 +1,26 @@
-# Build stage
-FROM openjdk:17-jdk AS build
+# Usar una imagen base con JDK 17 y Gradle 8.3
+FROM gradle:8.3-jdk17 AS build
 
+# Establecer un directorio de trabajo
 WORKDIR /app
 
-# Copiar todo el contenido al directorio de trabajo
-COPY . .
+# Copiar archivos de tu proyecto al directorio de trabajo
+COPY . /app
 
-# Dar permisos de ejecución a gradlew
-RUN chmod +x ./gradlew
+# Ejecutar Gradle para construir el proyecto
+RUN gradle clean build
 
-# Ejecutar el build con Gradle
-RUN ./gradlew build
+# Crear una nueva imagen basada en OpenJDK 8
+FROM openjdk:11-jre-slim-buster
 
-# Run stage
-FROM openjdk:17-jdk AS final
-
-WORKDIR /app
+# Exponer el puerto que utilizará la aplicación
+EXPOSE 8080
 
 # Copiar el JAR construido desde la etapa de construcción
-COPY --from=build /app/build/libs/DailyPost-0.0.1-SNAPSHOT.jar ./app.jar
+COPY --from=build /app/build/libs/DailyPost-0.0.1-SNAPSHOT.jar /app/DailyPost-0.0.1-SNAPSHOT.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+# Establecer el punto de entrada para ejecutar la aplicación
+ENTRYPOINT ["java", "-jar", "/app/DailyPost-0.0.1-SNAPSHOT.jar"]
 
