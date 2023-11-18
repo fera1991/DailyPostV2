@@ -5,6 +5,8 @@ import Comments from '../../Components/Comments';
 import NewComment from '../../Components/NewComments';
 import OptionsPots from '../../Components/AdminComponents/OptionsPostAdmin';
 import MenuAdmin from '../../Components/AdminComponents/MenuAdmin';
+import PostCard from '../../Components/PostCard';
+import SaveAdmin from '../../Components/AdminComponents/SaveAdmin'
 import PostIcons from '../../Components/PostIcons';
 import { useState,useEffect  } from "react";
 import { useAPIContext } from "../../Context/Context";
@@ -103,36 +105,11 @@ export default function Post() {
         <MenuAdmin props={search} func = {reload} owned={ownedData} favorite={allFavorite} reload={boolFunction}/>
         
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
-                <div className="flex w-full justify-center mt-8 p-9">
-                    <Pagination sumNum = {sum} subtractionNum={subtraction} /> 
-                    <div className="flex-col items-center xl:w-2/5 md:2/5 sm:w-2/5 ">
-                    { 
-                        array.map(data => {
-                            return <article className="bg-white m-6">
-                            <div className="px-4 py-3 flex items-center justify-between">
-                                <h1 className="font-sans font-bold space-around">{data.user.username}{ data.active === false && <div className="text-red-500 text-xs">Desactivado</div>}</h1>
-                                {
-                                    userOptions === data.user.username
-                                    &&
-                                    <OptionsPots props = {data}  boolFunction ={boolFunction } />
-                                }
-                                
-                            </div>
-                            <img className="w-full max-h-70 object-cover my-1" src={`${data.image}`} alt="pic post"></img>
-                            <div className="w-full flex flex-col font-mediun text-sn space-y-2 px-4 py-1">
-                                <h1 className="font-sans font-bold space-around">{data.title}</h1>
-                                <p className="font-normal text-sm text-gray-700 break-words overflow-y-auto">{data.description}</p>
-                            </div>
-                            <h3 className="font-normal text-xs text-gray-400 py-1 px-4">{data.updatedAt}</h3>
-                            <PostIcons props = {data}/>
-                            <Comments props = {data} />
-                            <NewComment props = {data} />
-                            </article>
-                            })
-                    }
-                                        
-                    </div>
+
+                <div>
+                <PostCard />
                 </div>
+
             </div>
         </>
 
