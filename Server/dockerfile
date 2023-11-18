@@ -1,5 +1,5 @@
 # Primera etapa: construir la aplicación
-FROM adoptopenjdk:17-jdk-hotspot AS build
+FROM openjdk:17-jdk AS build
 
 # Configurar el directorio de trabajo
 WORKDIR /app
