@@ -1,0 +1,35 @@
+# Primera etapa: construir la aplicación
+FROM adoptopenjdk:17-jdk-hotspot AS build
+
+# Configurar el directorio de trabajo
+WORKDIR /app
+
+# Copiar solo los archivos de configuración de Gradle para aprovechar el caché de Docker
+COPY build.gradle settings.gradle ./
+
+# Copiar solo el archivo de inicialización de Gradle para aprovechar el caché de Docker
+COPY gradle/ gradle/
+
+# Descargar las dependencias de Gradle
+RUN ./gradlew build
+
+# Copiar el código fuente
+COPY src ./src
+
+# Compilar la aplicación
+RUN ./gradlew build
+
+# Segunda etapa: ejecutar la aplicación
+FROM adoptopenjdk:17-jre-hotspot
+
+# Configurar el directorio de trabajo en la segunda etapa
+WORKDIR /app
+
+# Copiar el archivo JAR compilado desde la etapa de construcción
+COPY --from=build /app/build/libs/DailyPost-0.0.1-SNAPSHOT.jar ./app.jar
+
+# Exponer el puerto en el que la aplicación se ejecutará
+EXPOSE 8080
+
+# Comando para ejecutar la aplicación cuando se inicia el contenedor
+CMD ["java", "-jar", "app.jar"]
