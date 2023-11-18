@@ -33,7 +33,7 @@ public class AuthController {
 	@Autowired
 	private RequestErrorHandler errorHandler;
 	
-	@PostMapping("/login")
+	@PostMapping("/signin")
 	public ResponseEntity<?> login(@RequestBody @Valid LoginDTO info, BindingResult validations){
 		
 		if(validations.hasErrors()) {
@@ -73,7 +73,7 @@ public class AuthController {
 		
 		if(response != null) {
 			return new ResponseEntity<>(
-	                new MessageDTO("Email already exists"), HttpStatus.ACCEPTED);
+	                new MessageDTO("Email already exists"), HttpStatus.CONFLICT);
 		}
 		
 		try { 

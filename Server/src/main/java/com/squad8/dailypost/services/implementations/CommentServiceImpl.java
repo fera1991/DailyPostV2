@@ -24,7 +24,7 @@ public class CommentServiceImpl implements CommentService{
 	@Transactional(rollbackOn = Exception.class)
 	public void save(SaveCommentDTO info, Post post , User user) throws Exception {
 		
-		Comment comment = new Comment(post, info.getText());
+		Comment comment = new Comment(post, user, info.getText());
 		commentRepository.save(comment);
 	}
 

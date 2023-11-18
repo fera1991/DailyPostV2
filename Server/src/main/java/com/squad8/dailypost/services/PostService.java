@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 
 public interface PostService {
 	void save(SavePostDTO info, User user) throws Exception;
+	void toggleArchived(Post post,boolean Status)  throws Exception;
 	Post findOneById(String id);
 	Page<Post> findByTitle(String title,int page, int size);
 	List<Post> findAll();

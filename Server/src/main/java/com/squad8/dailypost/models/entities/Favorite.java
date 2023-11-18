@@ -22,6 +22,8 @@ public class Favorite {
 		this.post = post;
 		this.user = user;
 	}
+	
+	public Favorite() {}
 
 	@Id
 	@Column(name = "id_favorite")

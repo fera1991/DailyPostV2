@@ -32,6 +32,8 @@ public class Post {
 		this.description = description;
 		this.user = user;
 	}
+	public Post() {
+    }
 
 	@Id
 	@Column(name = "id_post")
@@ -47,7 +49,7 @@ public class Post {
 	@Column(name = "description")
     private String description;
 	
-	@Column(name = "isArchived")
+	@Column(name = "is_archived")
     private boolean isArchived;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

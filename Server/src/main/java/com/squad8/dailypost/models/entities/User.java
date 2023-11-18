@@ -22,7 +22,7 @@ import lombok.ToString;
 
 
 @Entity
-@ToString(exclude = {"posts","tokens"})
+@ToString(exclude = {"posts","tokens","favorites"})
 @Data
 @Table(name = "users")
 public class User implements UserDetails{
@@ -48,6 +48,10 @@ public class User implements UserDetails{
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Post> posts;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Favorite> favorites;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnore
