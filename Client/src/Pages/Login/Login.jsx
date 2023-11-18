@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser} from '@fortawesome/free-solid-svg-icons';
 // import { useAPIContext } from "../../Context/Context";
 import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function Login() {
@@ -39,7 +39,7 @@ export default function Login() {
   const { register, handleSubmit, } = useForm();
 
   return (
-    
+
     <div className=" flex justify-center items-center min-h-screen bg-purple-50">
       <main className="bg-white max-w-lg p-8 md:p-12 my-10 rounded-sm shadow-2xl m-4">
         <img src={DailyPost_logo} alt="Daily Post"></img>
@@ -67,7 +67,8 @@ export default function Login() {
           <button className="font-sans bg-purple-400 hover:bg-purple-500 text-white font-bold py-1 px-4 mt-4 rounded-sm">SING IN</button>
         </form>
         <div className='mt-4'>
-          <p href="">¿No tiene una cuenta? <a class="#" className='ml-1 text-blue-500' href="http://">Registrate</a></p>
+          <Link to="/checkin">
+          <p href="">¿No tiene una cuenta? <a class="#" className='ml-1 text-blue-500' href="http://">Registrate</a></p></Link>
         </div>
       </main>
     </div>

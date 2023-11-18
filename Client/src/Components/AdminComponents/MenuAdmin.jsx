@@ -40,13 +40,13 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
         <a class="flex items-center space-x-3 rtl:space-x-reverse">
           <img src={DailyPost_logo} class="h-12" />
         </a>
-        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse ">
           <Link to="/newpost">
-            <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" type="button" class="text-black bg-purple-50  focus:ring-4  focus:outline-none focus:ring-purple-50 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-50 dark:hover:bg-purple-100 dark:focus:ring-purple-100">
+            <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" type="button" class="mr-2 text-black bg-purple-50  focus:ring-4  focus:outline-none focus:ring-purple-50 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-50 dark:hover:bg-purple-100 dark:focus:ring-purple-100 border">
               Crear Post</button>
           </Link>
           <Link to="/">
-            <button type="button" class="text-black bg-purple-50  focus:ring-4  focus:outline-none focus:ring-purple-50 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-50 dark:hover:bg-purple-100 dark:focus:ring-purple-100">
+            <button type="button" class="text-black bg-purple-50  focus:ring-4   focus:outline-none focus:ring-purple-50 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-50 dark:hover:bg-purple-100 dark:focus:ring-purple-100 border">
               Cerrar sesion</button>
           </Link>
         </div>
@@ -80,7 +80,7 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                 <label
                   for="exampleSearch2"
                   class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-black dark:peer-focus:text-primary"
-                >Search</label
+                >Buscar usuario...</label
                 >
               </div>
             </li>

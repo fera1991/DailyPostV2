@@ -6,6 +6,7 @@ import { faKey, faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Checkin() {
 
@@ -52,11 +53,12 @@ export default function Checkin() {
                             </input>
                         </div>
                     </div>
-                    
-                    <button className="font-sans bg-purple-400 hover:bg-purple-500 text-white font-bold py-1 px-4 mt-4 rounded-sm">CHECK IN</button>
+                    <Link to="/"><button className="w-full font-sans bg-purple-400 hover:bg-purple-500 text-white font-bold py-1 px-4 mt-4 rounded-sm">CHECK IN</button></Link>
+                   
                 </form>
                 <div className='mt-4'>
-                    <p href="">¿Ya tienes una cuenta? <a class="#" className='ml-1 text-blue-500'  href="">Login</a></p>
+                <Link to="/">
+                    <p href="">¿Ya tienes una cuenta? <a class="#" className='ml-1 text-blue-500'  href="">Login</a></p> </Link>
                 </div>
             </main>
         </div>

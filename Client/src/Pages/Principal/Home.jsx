@@ -108,6 +108,7 @@ export default function Post() {
 
                 <div>
                 <PostCard />
+                <PostCard />
                 </div>
 
             </div>
