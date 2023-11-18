@@ -6,7 +6,7 @@ import {BrowserRouter, Route,Routes} from 'react-router-dom';
 import Private from './Components/Private/Private';
 import NewPost from './Pages/CreatePost/NewPost';
 import PostCard from './Components/PostCard';
-import SaveAdmin from './Components/AdminComponents/SaveAdmin'
+import SavePost from './Pages/Principal/SavePost'
 import PostWithComments from './Components/PostWithComments';
 const App = () => (
   
@@ -17,7 +17,7 @@ const App = () => (
       <Route path="/newpost" element={ <NewPost/>}/>
       <Route path ="/home" element={ <PrincipalAdmin/> }/>
       <Route path="/404" element={<Private/>}/>
-      <Route path="/savePost" element={<SaveAdmin/>}/>
+      <Route path="/savePost" element={<SavePost/>}/>
       <Route path="/coment" element={<PostWithComments/>}/>
     </Routes>
   </BrowserRouter>

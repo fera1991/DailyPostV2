@@ -6,7 +6,6 @@ import NewComment from '../../Components/NewComments';
 import OptionsPots from '../../Components/AdminComponents/OptionsPostAdmin';
 import MenuAdmin from '../../Components/AdminComponents/MenuAdmin';
 import PostCard from '../../Components/PostCard';
-
 import PostIcons from '../../Components/PostIcons';
 import { useState,useEffect  } from "react";
 import { useAPIContext } from "../../Context/Context";
@@ -15,7 +14,7 @@ import Pagination from '../../Components/Pagination';
 // import { set } from 'react-hook-form';
 
 
-export default function Post() {
+export default function SavePost() {
 
     const [Options,setOptions] = useState(false);
     const [userOptions,setUserOptions] = useState(false);
