@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 
 const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) => {
   const [likes, setLikes] = useState(0);
+  const [isLiked, setIsLiked] = useState(false); // New state variable for like status
   const [showOptions, setShowOptions] = useState(false);
 
   const handleLike = () => {
-    setLikes(currentLikes => currentLikes + 1);
+    setLikes(prevLikes => prevLikes + (isLiked ? -1 : 1)); // Increment or decrement likes
+    setIsLiked(!isLiked); // Toggle the like state
   };
 
   const handleComment = () => {
@@ -50,9 +52,9 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
           <div className="p-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <button onClick={handleLike} title="Like post" className="flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 fill-current">
-                    <path d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"></path>
+              <button onClick={handleLike} type="button" title="Like post" className="flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`w-6 h-6 ${isLiked ? 'fill-red-500' : 'fill-none'}`}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                   </svg>
                 </button>
                 <button onClick={handleComment} title="Add a comment" className="flex items-center justify-center">
@@ -69,7 +71,7 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
             </div>
             <div className="flex flex-wrap items-center pb-1 pt-3">
               <div className="flex items-center space-x-2">
-                <div className="ml-2 text-sm font-semibold">{likes} Me gusta </div>
+                <div className="ml-3 text-sm font-semibold">{likes} Like</div>
               </div>
             </div>
             <div className="mt-2 text-sm font-semibold">{postDescription}</div>

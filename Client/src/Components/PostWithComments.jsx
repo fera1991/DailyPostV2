@@ -4,7 +4,10 @@ const PostWithComments = () => {
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false); // New state variable for like status
   const [commentText, setCommentText] = useState('');
+  const [comments, setComments] = useState([]); // Nuevo estado para los comentarios
+
   const [showOptions, setShowOptions] = useState(false);
+
 
   const handleLike = () => {
     setLikes(prevLikes => prevLikes + (isLiked ? -1 : 1)); // Increment or decrement likes
@@ -15,10 +18,15 @@ const PostWithComments = () => {
     setCommentText(event.target.value);
   };
 
+
   const submitComment = () => {
-    console.log('Comment:', commentText);
-    setCommentText(''); // Reset comment input
+    if (commentText) {
+      setComments([...comments, commentText]); // Agrega el comentario al estado
+      setCommentText(''); // Limpia el campo de texto
+    }
   };
+
+
 
   const toggleOptions = () => {
     setShowOptions(!showOptions);
@@ -59,7 +67,11 @@ const PostWithComments = () => {
             </div>
 
             <div className="flex-1 overflow-y-auto p-4">
-              <p><span className="font-bold">nameUser</span>{handleCommentChange}</p>
+              {comments.map((comment, index) => (
+                <div key={index} className="mb-2">
+                  <span className="font-bold">nameUser: </span>{comment}
+                </div>
+              ))}
             </div>
 
             <div className="mt-4 flex items-center justify-between border-t border-black p-2">
@@ -85,17 +97,20 @@ const PostWithComments = () => {
               <div className="text-sm font-semibold">{likes} likes</div>
             </div>
 
-            {/* Comment Input */}
-            <div className="border-t border-black p-4">
-              <div className="flex items-center space-x-3">
-                <input
-                  type="text"
-                  placeholder="Add a comment..."
-                  className="flex-1 bg-transparent text-sm placeholder-gray-400 outline-none"
-                  value={commentText}
-                  onChange={handleCommentChange}
-                />
-                <button onClick={submitComment} type="submit" className="text-sm text-blue-400">Post</button>
+
+            <div className="text-black">
+              {/* Input para comentarios */}
+              <div className="border-t border-black p-4">
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="text"
+                    placeholder="Add a comment..."
+                    className="flex-1 bg-transparent text-sm placeholder-gray-400 outline-none"
+                    value={commentText}
+                    onChange={handleCommentChange}
+                  />
+                  <button onClick={submitComment} type="submit" className="text-sm text-blue-400">Post</button>
+                </div>
               </div>
             </div>
           </div>
