@@ -20,7 +20,7 @@ COPY src ./src
 RUN ./gradlew build
 
 # Segunda etapa: ejecutar la aplicación
-FROM adoptopenjdk:17-jre-hotspot
+FROM openjdk:17-jre AS final
 
 # Configurar el directorio de trabajo en la segunda etapa
 WORKDIR /app
