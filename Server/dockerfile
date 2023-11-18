@@ -1,24 +1,9 @@
-# Build stage
-FROM openjdk:17-jdk AS build
-
-WORKDIR /app
-
-COPY build.gradle settings.gradle ./
-COPY gradle/ gradle/
-
-RUN ./gradlew build
-
-COPY src ./src
-
-RUN ./gradlew build
-
-# Run stage
-FROM openjdk:17-jdk AS final
-
-WORKDIR /app
-
-COPY --from=build /app/build/libs/DailyPost-0.0.1-SNAPSHOT.jar ./app.jar
-
+FROM ubuntu:latest AS build
+RUN apt-get update
+RUN apt-get install openjdk-17-jdk -y
+COPY . .
+RUN ./gradlew bootJar --no-daemon
+FROM openjdk:17-jdk-slim
 EXPOSE 8080
-
-CMD ["java", "-jar", "app.jar"]
+COPY --from=build /app/build/libs/DailyPost-0.0.1-SNAPSHOT.jar ./app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
