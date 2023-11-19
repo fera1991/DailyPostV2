@@ -57,9 +57,10 @@ export default function Post() {
 
     const allData = async () =>{
         const data = await context.getAll(num);
-        const pages = data.pages;
-        setmaxpages(pages);
-        setArray(data.data)
+        console.log(data);
+        //const pages = data.pages;
+        //setmaxpages(pages);
+        //setArray(data.data)
     }
 
     const allFavorite = async () =>

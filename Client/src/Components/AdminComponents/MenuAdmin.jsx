@@ -6,10 +6,12 @@ import FormPost from "./FormPostAmin";
 import OptionsBarsAdmin from './OptionsBarsAdmin';
 import { useState } from "react";
 import { Link, useLocation } from 'react-router-dom';
+import { useAPIContext } from '../../Context/Context';
 
 
 
 export default function MenuAdmin({ props = () => { }, func = () => { }, owned = () => { }, favorite = () => { }, reload = () => { } }) {
+  const context = useAPIContext();
   const [add, setAdd] = useState(false);
   const [bar, setBar] = useState(false);
   const [post, setPost] = useState('')
@@ -23,6 +25,11 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
       console.log("no")
     }
   }
+
+  const logoutFuntion = () => {
+    context.logout(); 
+    navigate("/");  
+}
 
   const location = useLocation();
   const [Save, setSave] = useState(false);
@@ -46,7 +53,9 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
               Crear Post</button>
           </Link>
           <Link to="/">
-            <button type="button" class="text-black bg-purple-50  focus:ring-4   focus:outline-none focus:ring-purple-50 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-50 dark:hover:bg-purple-100 dark:focus:ring-purple-100 border">
+            <button type="button" class="text-black bg-purple-50  focus:ring-4   focus:outline-none focus:ring-purple-50 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-50 dark:hover:bg-purple-100 dark:focus:ring-purple-100 border"
+            onClick={()=>{logoutFuntion()}} 
+            >
               Cerrar sesion</button>
           </Link>
         </div>
