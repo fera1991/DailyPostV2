@@ -41,6 +41,21 @@ export const APIProvider = (prop) => {
         }
       }
 
+      const create = async (title,description,image)=>{
+        try {
+            const data = await Post.create(token,title,description,image);
+            console.log(data);
+            if(data)
+            {
+                return true
+            }
+            return false;
+
+        } catch (error) {
+            console.log(error);
+        }
+      }
+
       const getAll = async (num)=>{
         const data = Post.getAll(token,num);
         return data
@@ -63,7 +78,8 @@ export const APIProvider = (prop) => {
             login:login,
             logout:logout,
             getAll:getAll,
-        }),[token,username,login,logout,getAll]
+            create:create
+        }),[token,username,login,logout,getAll,create]
     );
     return <APIContext.Provider value={data}>
             {prop.children}
