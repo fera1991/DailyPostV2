@@ -10,6 +10,17 @@ export const APIProvider = (prop) => {
     const [token, setToken] = useState("");
     const [username,setUsername] = useState("");
     
+    const getToken = () => {
+        const tokenData = localStorage.getItem("TOKEN");
+        if (tokenData !== "undefined") {
+          setToken(tokenData);
+          console.log(token);
+        }
+      };
+
+    useEffect(() => {
+        getToken();
+      }, [token]); 
 
     const login = async (user ,password)=>{
         
@@ -31,27 +42,17 @@ export const APIProvider = (prop) => {
       }
 
       const getAll = async (num)=>{
-        console.log(token)
-        const data = await Post.getAll(token,num);
+        const data = Post.getAll(token,num);
         return data
     }
 
-      
-      useEffect( () =>{
-      const tokenData = localStorage.getItem("TOKEN");
-       if(tokenData != "undefined")
-      {
-        setToken(tokenData); 
-        
-      }
-      },[]);
+
       
 
       const logout = () => {
           localStorage.setItem("TOKEN",undefined);
           setToken(undefined);
           setUsername(undefined);
-          setUserRole(undefined);
       }
     
 

@@ -56,7 +56,11 @@ export default function Post() {
     }
 
     const allData = async () =>{
-        const data = await context.getAll(num);
+        let data = false;
+
+        while (!data) {
+            data = await context.getAll(num);
+          }
         console.log(data);
         //const pages = data.pages;
         //setmaxpages(pages);
