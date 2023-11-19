@@ -18,5 +18,26 @@ export const Post = {
             console.error(error);
             return false; 
         }
+    },
+    create: async (token,title,description,image) => {
+        console.log(token);
+
+        try {
+            const data = await axios.post(`${URL}/post/create`,{title: title,image: image,description: description},
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            });
+            console.log(data);
+            if(data.status === 201)
+            {
+                return data.data
+            }
+
+        } catch (error) {
+            console.log(error);
+            return undefined;
+        }
     }
 }
