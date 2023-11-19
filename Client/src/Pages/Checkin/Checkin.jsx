@@ -22,7 +22,7 @@ export default function Checkin() {
                             <FontAwesomeIcon className="w-5 h-5 mr-2  mt-3" icon={faUser} />
                         </div>
                         <div>
-                            <input className=" font-sans bg-gray-100 border h-5 w-96 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="text" placeholder="Name Complete">
+                            <input className=" font-sans bg-gray-100 border h-5 w-96 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="text" placeholder="Nombre completo">
                             </input>
                         </div>
                     </div>
@@ -31,7 +31,7 @@ export default function Checkin() {
                             <FontAwesomeIcon className="w-5 h-5 mr-2 mt-3" icon={faEnvelope} />
                         </div>
                         <div className='text-left'>
-                            <input className=" font-sans bg-gray-100 border h-5 w-96 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="text" placeholder="Email">
+                            <input className=" font-sans bg-gray-100 border h-5 w-96 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="text" placeholder="Correo">
                             </input>
                         </div>
                     </div>
@@ -40,7 +40,7 @@ export default function Checkin() {
                             <FontAwesomeIcon className=" w-5 h-5 mr-2 mt-5" icon={faKey} />
                         </div>
                         <div className='text-left'>
-                            <input className=" font-sans bg-gray-100 border h-5 w-96 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="password" placeholder="Password">
+                            <input className=" font-sans bg-gray-100 border h-5 w-96 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="password" placeholder="Contraseña">
                             </input>
                         </div>
                     </div>
@@ -49,16 +49,16 @@ export default function Checkin() {
                             <FontAwesomeIcon className=" w-5 h-5 mr-2 mt-5" icon={faKey} />
                         </div>
                         <div className='text-left'>
-                            <input className=" font-sans bg-gray-100 border h-5 w-96 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="password" placeholder="Validate password">
+                            <input className=" font-sans bg-gray-100 border h-5 w-96 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="password" placeholder="Validar contraseña">
                             </input>
                         </div>
                     </div>
-                    <Link to="/"><button className="w-full font-sans bg-purple-400 hover:bg-purple-500 text-white font-bold py-1 px-4 mt-4 rounded-sm">CHECK IN</button></Link>
+                    <Link to="/"><button className="w-full font-sans bg-purple-400 hover:bg-purple-500 text-white font-bold py-1 px-4 mt-4 rounded-sm">REGISTRARSE</button></Link>
                    
                 </form>
                 <div className='mt-4'>
                 <Link to="/">
-                    <p href="">¿Ya tienes una cuenta? <a class="#" className='ml-1 text-blue-500'  href="">Login</a></p> </Link>
+                    <p href="">¿Ya tienes una cuenta? <a class="#" className='ml-1 text-blue-500'  href="">Inicia sesion</a></p> </Link>
                 </div>
             </main>
         </div>

@@ -59,8 +59,8 @@ const PostWithComments = () => {
               {showOptions && (
                 <div className="absolute bg-white rounded shadow-md ml-64">
                   <ul>
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit</li>
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Editar</li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Eliminar</li>
                   </ul>
                 </div>
               )}
@@ -94,7 +94,7 @@ const PostWithComments = () => {
               </button>
             </div>
             <div className="mb-2 ml-4 flex items-center space-x-2">
-              <div className="text-sm font-semibold">{likes} likes</div>
+              <div className="text-sm font-semibold">{likes} Me gusta</div>
             </div>
 
 
@@ -104,12 +104,12 @@ const PostWithComments = () => {
                 <div className="flex items-center space-x-3">
                   <input
                     type="text"
-                    placeholder="Add a comment..."
+                    placeholder="Agregar comentario..."
                     className="flex-1 bg-transparent text-sm placeholder-gray-400 outline-none"
                     value={commentText}
                     onChange={handleCommentChange}
                   />
-                  <button onClick={submitComment} type="submit" className="text-sm text-blue-400">Post</button>
+                  <button onClick={submitComment} type="submit" className="text-sm text-blue-400">Publicar</button>
                 </div>
               </div>
             </div>

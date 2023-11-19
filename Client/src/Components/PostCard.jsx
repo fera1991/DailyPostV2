@@ -43,8 +43,8 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
             {showOptions && (
               <div className="absolute bg-white rounded shadow-md ml-64">
                 <ul>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit</li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Editar</li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Eliminar</li>
                 </ul>
               </div>
             )}
@@ -76,7 +76,7 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
             </div>
             <div className="flex flex-wrap items-center pb-1 pt-3">
               <div className="flex items-center space-x-2">
-                <div className="ml-3 text-sm font-semibold">{likes} Like</div>
+                <div className="ml-3 text-sm font-semibold">{likes} Me gusta</div>
               </div>
             </div>
             <div className="mt-2 text-sm font-semibold">{postDescription}</div>
