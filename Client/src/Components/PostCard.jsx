@@ -5,6 +5,11 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false); // New state variable for like status
   const [showOptions, setShowOptions] = useState(false);
+  const [isSaved, setIsSaved] = useState(false); // Estado para controlar si está guardado
+
+  const handleBookmark = () => {
+    setIsSaved(!isSaved); // Cambia el estado de isSaved
+  };
 
   const handleLike = () => {
     setLikes(prevLikes => prevLikes + (isLiked ? -1 : 1)); // Increment or decrement likes
@@ -13,10 +18,6 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
 
   const handleComment = () => {
     // Logic to handle comment action
-  };
-
-  const handleBookmark = () => {
-    // Logic to handle bookmark action
   };
 
   const toggleOptions = () => {
@@ -29,7 +30,6 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
         <div className="bg-coolGray-900 text-coolGray-100 rounded-md shadow-md sm:w-96">
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center space-x-2">
-              <img src="https://media.gq.com.mx/photos/5fd51c587938a266e30f81d1/16:9/w_1920,c_limit/Deadpool.jpg" alt="" className="bg-coolGray-500 border-coolGray-700 h-8 w-8 rounded-full object-cover object-center shadow-sm" />
               <div className="-space-y-1">
                 <h2 className="text-sm font-semibold leading-none">nameUser</h2>
               </div>
@@ -43,8 +43,8 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
             {showOptions && (
               <div className="absolute bg-white rounded shadow-md ml-64">
                 <ul>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Editar</li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Eliminar</li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit</li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</li>
                 </ul>
               </div>
             )}
@@ -54,11 +54,11 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <button onClick={handleLike} type="button" title="Like post" className="flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`w-6 h-6 ${isLiked ? 'fill-red-500' : 'fill-none'}`}>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.5" stroke={`${isLiked ? 'red' : 'currentColor'}`} className={`w-6 h-6 ${isLiked ? 'fill-red-500' : 'fill-none'}`}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                   </svg>
                 </button>
-
+                
                 <Link to={"/coment"}>
                   <button onClick={handleComment} title="Add a comment" className="flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 fill-current">
@@ -69,17 +69,20 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
 
               </div>
               <button onClick={handleBookmark} title="Bookmark post" className="flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 fill-current">
-                  <path d="M424,496H388.75L256.008,381.19,123.467,496H88V16H424ZM120,48V456.667l135.992-117.8L392,456.5V48Z"></path>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`w-6 h-6 ${isSaved ? 'fill-black' : 'fill-none'}`}>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
                 </svg>
+
               </button>
+
+
             </div>
             <div className="flex flex-wrap items-center pb-1 pt-3">
               <div className="flex items-center space-x-2">
-                <div className="ml-3 text-sm font-semibold">{likes} Me gusta</div>
+                <div className="text-sm font-semibold">{likes} Me gusta</div>
               </div>
             </div>
-            <div className="mt-2 text-sm font-semibold">{postDescription}</div>
+            <div className="mt-2 text-sm font-semibold">-----------Descripcion----------</div>
           </div>
         </div>
       </div>

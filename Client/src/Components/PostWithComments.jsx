@@ -5,6 +5,11 @@ const PostWithComments = () => {
   const [isLiked, setIsLiked] = useState(false); // New state variable for like status
   const [commentText, setCommentText] = useState('');
   const [comments, setComments] = useState([]); // Nuevo estado para los comentarios
+  const [isSaved, setIsSaved] = useState(false); // Estado para controlar si está guardado
+
+  const handleBookmark = () => {
+    setIsSaved(!isSaved); // Cambia el estado de isSaved
+  };
 
   const [showOptions, setShowOptions] = useState(false);
 
@@ -45,8 +50,7 @@ const PostWithComments = () => {
           <div className="flex w-full flex-col md:w-1/2">
             <div className="flex items-center justify-between border-b border-black p-4">
               <div className="flex items-center">
-                <img src="https://media.gq.com.mx/photos/5fd51c587938a266e30f81d1/16:9/w_1920,c_limit/Deadpool.jpg" alt="User Profile" className="h-10 w-10 rounded-full  object-cover" />
-                <div className="ml-3">
+                <div>
                   <h2 className="text-sm font-bold">nameUser</h2>
                 </div>
               </div>
@@ -67,6 +71,9 @@ const PostWithComments = () => {
             </div>
 
             <div className="flex-1 overflow-y-auto p-4">
+              <div className="mb-2">
+                <span className="font-bold">nameUser: <span className=''>Descripcion--------- </span></span>
+              </div>
               {comments.map((comment, index) => (
                 <div key={index} className="mb-2">
                   <span className="font-bold">nameUser: </span>{comment}
@@ -76,8 +83,8 @@ const PostWithComments = () => {
 
             <div className="mt-4 flex items-center justify-between border-t border-black p-2">
               <div className="flex space-x-4">
-                <button onClick={handleLike} type="button" title="Like post" className="flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`w-6 h-6 ${isLiked ? 'fill-red-500' : 'fill-none'}`}>
+              <button onClick={handleLike} type="button" title="Like post" className="flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.5" stroke={`${isLiked ? 'red' : 'currentColor'}`} className={`w-6 h-6 ${isLiked ? 'fill-red-500' : 'fill-none'}`}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                   </svg>
                 </button>
@@ -87,13 +94,14 @@ const PostWithComments = () => {
                   </svg>
                 </button>
               </div>
-              <button type="button" title="Bookmark post" className="flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-5 w-5 fill-current">
-                  <path d="M424,496H388.75L256.008,381.19,123.467,496H88V16H424ZM120,48V456.667l135.992-117.8L392,456.5V48Z"></path>
+              <button onClick={handleBookmark} title="Bookmark post" className="flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`w-6 h-6 ${isSaved ? 'fill-black' : 'fill-none'}`}>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
                 </svg>
+
               </button>
             </div>
-            <div className="mb-2 ml-4 flex items-center space-x-2">
+            <div className="mb-2 ml-2 flex items-center space-x-2">
               <div className="text-sm font-semibold">{likes} Me gusta</div>
             </div>
 
