@@ -2,14 +2,14 @@ import React from 'react';
 import DailyPost_logo from '../../assets/img/DailyPost_logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser} from '@fortawesome/free-solid-svg-icons';
-// import { useAPIContext } from "../../Context/Context";
+import { useAPIContext } from "../../Context/Context";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function Login() {
 
-  // const context = useAPIContext();
+  const context = useAPIContext();
   const navigate = useNavigate();
   const [Error, setError] = useState(false);
 
@@ -19,10 +19,10 @@ export default function Login() {
 
     const role = data.user;
     console.log(data.user, data.password);
-    if (role) {
+    const info = await context.login(data.user, data.password);
+    if (info) {
       console.log("loggeo completado")
-      role === "admin" && navigate("/home")
-      role === "user" && navigate("/home")
+      navigate("/home")
     }
     else {
       console.log("loggeo fallido")
@@ -30,11 +30,10 @@ export default function Login() {
     }
   }
 
-  //   if(context.token){
-  //     console.log("ya existe su loggeo")
-  //     context.role === "admin" && navigate("/adminInfo")
-  //     context.role === "user" && navigate("/userInfo")
-  //     }
+  if(context.token){
+  console.log("ya existe su loggeo")
+  navigate("/home")
+  }
 
   const { register, handleSubmit, } = useForm();
 
