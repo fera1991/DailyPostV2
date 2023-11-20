@@ -57,7 +57,8 @@ export const APIProvider = (prop) => {
       }
 
       const getAll = async (num)=>{
-        const data = Post.getAll(token,num);
+        const tokenData = localStorage.getItem("TOKEN");
+        const data = Post.getAll(tokenData,num);
         return data
     }
 
@@ -78,8 +79,9 @@ export const APIProvider = (prop) => {
             login:login,
             logout:logout,
             getAll:getAll,
-            create:create
-        }),[token,username,login,logout,getAll,create]
+            create:create,
+            getToken:getToken
+        }),[token,username,login,logout,getAll,create,getToken]
     );
     return <APIContext.Provider value={data}>
             {prop.children}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) => {
+const PostCard = ({ user, post }) => {
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false); // New state variable for like status
   const [showOptions, setShowOptions] = useState(false);
@@ -31,7 +31,7 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center space-x-2">
               <div className="-space-y-1">
-                <h2 className="text-sm font-semibold leading-none">nameUser</h2>
+                <h2 className="text-sm font-semibold leading-none">{user.username}</h2>
               </div>
             </div>
             <button onClick={toggleOptions} title="Open options" type="button">
@@ -49,7 +49,7 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
               </div>
             )}
           </div>
-          <img src="https://i.pinimg.com/564x/1c/02/67/1c02674dcd5747a0258694d69ab84572.jpg" alt="" className="bg-coolGray-500 h-70 w-full object-cover object-center" />
+          <img src={post.image} alt="" className="bg-coolGray-500 h-70 w-full object-cover object-center" />
           <div className="p-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -82,7 +82,7 @@ const PostCard = ({ userProfilePic, postImage, initialLikes, postDescription }) 
                 <div className="text-sm font-semibold">{likes} Me gusta</div>
               </div>
             </div>
-            <div className="mt-2 text-sm font-semibold">-----------Descripcion----------</div>
+            <div className="mt-2 text-sm font-semibold">{post.description}</div>
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import MenuAdmin from '../../Components/AdminComponents/MenuAdmin';
 import PostCard from '../../Components/PostCard';
 
 import PostIcons from '../../Components/PostIcons';
-import { useState,useEffect  } from "react";
+import { useState, useEffect } from "react";
 import { useAPIContext } from "../../Context/Context";
 import Pagination from '../../Components/Pagination';
 // import { render } from '@testing-library/react';
@@ -17,103 +17,106 @@ import Pagination from '../../Components/Pagination';
 
 export default function Post() {
 
-    const [Options,setOptions] = useState(false);
-    const [userOptions,setUserOptions] = useState(false);
+    const [Options, setOptions] = useState(false);
+    const [userOptions, setUserOptions] = useState(false);
     const context = useAPIContext();
-    const [array,setArray] = useState([]);
-    const [num,setNum]= useState(0);
-    const [maxpages,setmaxpages]= useState(0);
+    const [array, setArray] = useState([]);
+    const [num, setNum] = useState(0);
+    const [maxpages, setmaxpages] = useState(0);
 
-    const search = async(id) =>{
-        
-            const data = [];
-            const item = await context.getOne(id);
-            console.log(item);
-            if (item) {
+    const search = async (id) => {
+
+        const data = [];
+        const item = await context.getOne(id);
+        console.log(item);
+        if (item) {
             data.push(item);
             setArray(data);
-            }
-            
-      }
-     
-      const sum = ()=>{
-          if(num < maxpages)
-          {
+        }
+
+    }
+
+    const sum = () => {
+        if (num < maxpages) {
             setNum(num + 1);
             console.log(num);
-          }
-      }
-      const subtraction = ()=>{
-          if(num >0){
+        }
+    }
+    const subtraction = () => {
+        if (num > 0) {
             setNum(num - 1);
             console.log(num);
-          }
-      }
-    const reload = async()=>{
+        }
+    }
+    const reload = async () => {
         const data = await context.getAll(0);
         setArray(data.data);
         setNum(0);
     }
 
-    const allData = async () =>{
-        let data = false;
-
-        while (!data) {
-            data = await context.getAll(num);
-          }
+    const allData = async () => {
+        const data = await context.getAll(num);
         console.log(data);
         //const pages = data.pages;
-        //setmaxpages(pages);
-        //setArray(data.data)
+        setmaxpages(data.total_pages);
+        setArray(data.content)
     }
 
-    const allFavorite = async () =>
-    {
+    const allFavorite = async () => {
         const data = await context.getFavorite();
         const id = data.favorites;
-        const promise =  id.map(data => renderFavorite(data))
+        const promise = id.map(data => renderFavorite(data))
         console.log(promise);
         Promise.all(promise).then(values => {
-           const validate = values.filter(data => {return data != undefined})
-           console.log(validate);
-            setArray(validate);});
-        
+            const validate = values.filter(data => { return data != undefined })
+            console.log(validate);
+            setArray(validate);
+        });
+
     }
-    const renderFavorite = async (id)=>{
+    const renderFavorite = async (id) => {
         const data = await context.getOne(id);
         return data;
 
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         const username = "";
         setUserOptions(username);
         allData();
-    },[num]);
+    }, [num]);
 
     const ownedData = async () => {
         const data = await context.getOwn(num);
         console.log(data);
-        if(data){
+        if (data) {
             setArray(data);
         }
     }
 
-    const boolFunction = () =>{
+    const boolFunction = () => {
         reload();
     }
 
-    
 
-    return(
+
+    return (
         <>
-        <MenuAdmin props={search} func = {reload} owned={ownedData} favorite={allFavorite} reload={boolFunction}/>
-        
+            <MenuAdmin props={search} func={reload} owned={ownedData} favorite={allFavorite} reload={boolFunction} />
+
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
 
                 <div>
-                <PostCard />
-                <PostCard />
+                    {array.map((data) => {
+                        // Realiza la comprobación fuera del bloque JSX
+                        if (data.archived === false) {
+                            // Renderiza el componente solo si la condición se cumple
+                            return <PostCard user={data.user} post={data}/>;
+                        } else {
+                            // Si no se cumple la condición, puedes decidir hacer algo más o simplemente no renderizar nada
+                            return null;
+                        }
+                    })}
                 </div>
 
             </div>
