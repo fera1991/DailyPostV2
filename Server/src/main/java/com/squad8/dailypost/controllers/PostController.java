@@ -121,6 +121,25 @@ public class PostController {
 		
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> findPost(@PathVariable(name = "id") String code){
+		
+		Post post = postService.findOneById(code);
+		if(post == null) {
+			return new ResponseEntity<>(new MessageDTO("Post Not Found"),HttpStatus.NOT_FOUND);
+		}
+		
+		try {
+			return new ResponseEntity<>(post, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(
+					new MessageDTO("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
 	@GetMapping("/all")
 	public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size){
 		Page<Post> posts = postService.findAll(page, size);
