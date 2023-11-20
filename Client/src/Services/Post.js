@@ -93,4 +93,53 @@ export const Post = {
             return false; 
         }
     },
+    like: async (token,id) => {
+        try {
+            const data = await axios.patch(`${URL}/post/like/${id}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            console.log(data);
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
+    toggle: async (token,id) => {
+        try {
+            const data = await axios.patch(`${URL}/post/toggle/${id}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            console.log(data);
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
+    favorite: async (token,id) => {
+        try {
+            const data = await axios.patch(`${URL}/post/fav/${id}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            console.log(data);
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
+
 }
