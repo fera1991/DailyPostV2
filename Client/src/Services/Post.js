@@ -141,5 +141,53 @@ export const Post = {
             return false; 
         }
     },
+    comment: async (token,id) => {
+        try {
+            const data = await axios.get(`${URL}/post/comment/${id}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            console.log(data);
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
+    saveComment: async (token,id,text) => {
+        try {
+            const data = await axios.post(`${URL}/post/comment/${id}`,{text: text},
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            console.log(data);
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
+    getAllFavorite: async (token,num) => {
+        try {
+            const data = await axios.get(`${URL}/post/fav/all?page=${num}&size=${15}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            console.log(data);
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
 
 }
