@@ -19,7 +19,7 @@ export const Auth = {
             return false; 
         }
     },
-    
+
     findAll: async (token) => {
         try {
             const data = await axios.get(`${URL}/`,
@@ -36,5 +36,22 @@ export const Auth = {
             return false; 
         }
     },
+    findAllPostByUser: async (token, id) => {
+        try {
+            const data = await axios.get(`${URL}/posts/${id}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            console.log(data);
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
+
 
 }
