@@ -35,4 +35,20 @@ export const Auth = {
         }
     },
 
+    register: async (username, email, password) => {
+        try {
+              
+            const data = await axios.post(`${URL}/register`,{username: username, email: email, password: password});
+              console.log(data);
+            if(data.status === 201)
+            {
+                return data.data
+            }
+
+        } catch (error) {
+            console.log(error);
+            return undefined;
+        }
+    },
+
 }
