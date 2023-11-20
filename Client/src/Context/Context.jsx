@@ -41,6 +41,32 @@ export const APIProvider = (prop) => {
         }
       }
 
+      const whoami = async ()=>{
+        try{
+            const tokenData = localStorage.getItem("TOKEN");
+            const data = await Auth.whoami(tokenData);
+            return data;
+
+        } catch (error){
+            console.log(error);
+            return false;
+        }
+      }
+
+      const register = async (username, email, password)=>{
+        try{
+            const data = await Post.create(username,email,password);
+            console.log(data);
+            if(data){
+                return true;
+            }
+            return false;
+
+        } catch (error) {
+            return false;
+        }
+      }
+
       const create = async (title,description,image)=>{
         try {
             const data = await Post.create(token,title,description,image);
