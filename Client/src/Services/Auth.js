@@ -17,5 +17,22 @@ export const Auth = {
             console.log(error);
             return undefined;
         }
-    }
+    },
+    whoami: async (token) => {
+        try {
+            const data = await axios.get(`${URL}/whoami`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            console.log(data);
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
+
 }
