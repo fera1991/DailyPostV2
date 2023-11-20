@@ -39,5 +39,58 @@ export const Post = {
             console.log(error);
             return undefined;
         }
-    }
+    },
+    update: async (token,title,description,image, id) => {
+        console.log(token);
+
+        try {
+            const data = await axios.put(`${URL}/post/create/${id}`,{title: title,image: image,description: description},
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            });
+            console.log(data);
+            if(data.status === 201)
+            {
+                return data.data
+            }
+
+        } catch (error) {
+            console.log(error);
+            return undefined;
+        }
+    },
+    findOwn: async (token,num) => {
+        try {
+            const data = await axios.get(`${URL}/post/owned?page=${num}&size=${15}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            console.log(data);
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
+    findOne: async (token,id) => {
+        try {
+            const data = await axios.get(`${URL}/post/${id}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            console.log(data);
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
 }
