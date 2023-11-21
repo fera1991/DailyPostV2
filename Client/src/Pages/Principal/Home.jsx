@@ -106,7 +106,7 @@ export default function Post() {
 
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
 
-                <div>
+                <div className='mt-20'>
                     {array.map((data) => {
                         // Realiza la comprobación fuera del bloque JSX
                         if (data.archived === false) {
