@@ -28,7 +28,7 @@ const PostCard = ({ user, post }) => {
   const PrimaryCard = () => (
     <div className="container mx-auto px-20 post-card flex justify-center items-center " >
       <div className="flex items-center justify-center p-7 px-6" style={{ width: '90%', height: 'auto', maxWidth: '800px', minHeight: '500px' }}>
-        <div className="bg-gray-100 text-black rounded-md shadow-md sm:w-full" style={{ width: '90%', height: '90%' }}>
+        <div className="bg-gray-100 text-black rounded-md shadow-md sm:w-full" style={{ width: '80%', height: '80%' }}>
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center space-x-2">
               <div className="-space-y-1">
