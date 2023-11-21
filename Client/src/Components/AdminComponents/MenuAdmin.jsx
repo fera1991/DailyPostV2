@@ -43,8 +43,31 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
     setPostMe(location.pathname === '/postMe')
   }, [location.pathname, Home, Save]);
 
+
+  const [showMenu, setShowMenu] = useState(true);
+  let lastScrollY = window.scrollY;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY) {
+        // Scrolling down
+        setShowMenu(false);
+      } else {
+        // Scrolling up
+        setShowMenu(true);
+      }
+      lastScrollY = window.scrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <nav className="bg-white dark:bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-purple-50">
+    <nav className={`bg-white dark:bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-purple-50 ${!showMenu && 'hidden'}`}>
     <div className="flex flex-wrap items-center object-center justify-between mx-auto p-4">
         <a className="flex items-center space-x-3 rtl:space-x-reverse">
             <img src={DailyPost_logo} className="h-12" alt="Logo" />
