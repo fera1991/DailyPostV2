@@ -49,17 +49,16 @@ export default function SavePost() {
           }
       }
     const reload = async()=>{
-        const data = await context.getAll(0);
+        const data = await context.getAllFavorite(0);
         setArray(data.data);
         setNum(0);
     }
 
     const allData = async () => {
-        const data = await context.getAll(num);
-        console.log(data);
-        //const pages = data.pages;
+        const data = await context.getAllFavorite(num);
+        console.log(data.content);
         setmaxpages(data.total_pages);
-        setArray(data.content)
+        setArray(data.content);
     }
 
     const allFavorite = async () =>
@@ -105,9 +104,19 @@ export default function SavePost() {
         <MenuAdmin props={search} func = {reload} owned={ownedData} favorite={allFavorite} reload={boolFunction}/>
         
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
-
-           
-
+                <div className='mt-20'>
+                    {array.map((data) => {
+                        // Realiza la comprobación fuera del bloque JSX
+                        console.log(data.post)
+                        if (data.post.archived === false) {
+                            // Renderiza el componente solo si la condición se cumple
+                            return <PostCard user={data.user} post={data.post}/>;
+                        } else {
+                            // Si no se cumple la condición, puedes decidir hacer algo más o simplemente no renderizar nada
+                            return null;
+                        }
+                    })}
+                </div>
             </div>
         </>
 

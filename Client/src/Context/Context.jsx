@@ -85,13 +85,19 @@ export const APIProvider = (prop) => {
       const getAll = async (num)=>{
         const tokenData = localStorage.getItem("TOKEN");
         const data = Post.getAll(tokenData,num);
-        return data
+        return data;
     }
 
     const getAllOwn = async (num)=>{
         const tokenData = localStorage.getItem("TOKEN");
         const data = Post.findOwn(tokenData,num);
-        return data
+        return data;
+    }
+
+    const getAllFavorite = async (num)=>{
+        const tokenData = localStorage.getItem("TOKEN");
+        const data = Post.getAllFavorite(tokenData,num);
+        return data;
     }
 
       
@@ -113,8 +119,10 @@ export const APIProvider = (prop) => {
             create:create,
             getToken:getToken,
             getAllOwn:getAllOwn,
-            register:register
-        }),[token,username,login,logout,getAll,create,getToken,getAllOwn]
+            getAllFavorite:getAllFavorite,
+            register:register,
+            whoami:whoami
+        }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite]
     );
     return <APIContext.Provider value={data}>
             {prop.children}
