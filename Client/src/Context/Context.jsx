@@ -55,7 +55,7 @@ export const APIProvider = (prop) => {
 
       const register = async (username, email, password)=>{
         try{
-            const data = await Post.create(username,email,password);
+            const data = await Auth.register(username,email,password);
             console.log(data);
             if(data){
                 return true;
@@ -112,7 +112,8 @@ export const APIProvider = (prop) => {
             getAll:getAll,
             create:create,
             getToken:getToken,
-            getAllOwn:getAllOwn
+            getAllOwn:getAllOwn,
+            register:register
         }),[token,username,login,logout,getAll,create,getToken,getAllOwn]
     );
     return <APIContext.Provider value={data}>

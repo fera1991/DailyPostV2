@@ -5,14 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useAPIContext } from "../../Context/Context";
 
 // ... (importaciones y código previo)
 
 export default function Checkin() {
     const { handleSubmit, control, setError } = useForm();
     const navigate = useNavigate();
+    const context = useAPIContext();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         const { username, email, password, confirmPassword } = data;
 
         if (password !== confirmPassword) {
@@ -22,8 +24,16 @@ export default function Checkin() {
             });
             return;
         }
+        
+        const result = context.register(username, email, password)
 
-        navigate('/success');
+        if( result ){
+            navigate('/');
+        }
+        else{
+            console.log("error");
+        }
+        
     };
 
     return (
