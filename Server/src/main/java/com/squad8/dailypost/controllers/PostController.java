@@ -249,4 +249,14 @@ public class PostController {
 					new MessageDTO("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("/like/{id}")
+	public ResponseEntity<?> getAllOwnFavorite(@PathVariable(name = "id") String code){
+		Post post = postService.findOneById(code);
+		if(post == null) {
+			return new ResponseEntity<>(new MessageDTO("Post Not Found"),HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(post.getLikes(),HttpStatus.OK);
+		
+	}
 }

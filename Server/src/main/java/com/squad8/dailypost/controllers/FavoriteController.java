@@ -104,5 +104,15 @@ public class FavoriteController {
 				,HttpStatus.OK);
 		
 	}
+	
+	@GetMapping("/entirety")
+	public ResponseEntity<?> getAllOwnFavorite(@RequestParam(defaultValue = "10") int size, HttpServletRequest request){
+		String tokenHeader = request.getHeader("Authorization");
+		String token = tokenHeader.substring(7);
+		
+		User user = userService.findOneByIdentifier(jwtTools.getUsernameFrom(token));
+		return new ResponseEntity<>(user.getFavorites(),HttpStatus.OK);
+		
+	}
 
 }
