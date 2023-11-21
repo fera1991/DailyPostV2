@@ -7,6 +7,7 @@ import OptionsBarsAdmin from './OptionsBarsAdmin';
 import { useState } from "react";
 import { Link, useLocation } from 'react-router-dom';
 import { useAPIContext } from '../../Context/Context';
+import UserList from '../UserList';
 
 
 
@@ -16,15 +17,22 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
   const [bar, setBar] = useState(false);
   const [post, setPost] = useState('')
 
+  //Busqueda de usuario --->
   const onSearch = () => {
-    if (post.length > 5) {
-      props(post);
-      setPost('')
-    }
-    else {
-      console.log("no")
-    }
+    console.log(post);
+    setShowUserList(true);
   }
+  
+  const handleBlur = () => {
+    setPost('');
+  };
+
+  const handleEnterKey = (event) => {
+    if (event.key === 'Enter') {
+      onSearch();
+    }
+  };
+  //Busqueda de usuario <---
 
   const logoutFuntion = () => {
     context.logout();
@@ -65,6 +73,29 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+
+  //Busqueda de usuario --->
+  const [showUserList, setShowUserList] = useState(false);
+  const [userList, setUserList] = useState([
+    { id: 1, username: 'usuario1' },
+    { id: 2, username: 'usuario2' },
+    { id: 3, username: 'usuario3' },
+    { id: 4, username: 'usuario4' },
+    { id: 5, username: 'usuario5' },
+    // ... Agrega más usuarios según sea necesario
+  ]);
+
+  const handleUserClick = (username) => {
+    // Aquí puedes realizar alguna acción con el nombre de usuario seleccionado
+    console.log(`Usuario seleccionado: ${username}`);
+  };
+
+  const closeUserList = () => {
+    setShowUserList(false);
+    setUserList([]);
+  };
+  //Busqueda de usuario <---
 
   return (
     <nav className={`bg-white dark:bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-purple-50 ${!showMenu && 'hidden'}`}>
@@ -189,6 +220,10 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                             className="peer block min-h-[auto] w-full rounded-lg border-2 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-black dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                             id="exampleSearch2"
                             placeholder="Type query"
+                            value={post}
+                            onChange={(e) => setPost(e.target.value)}
+                            onKeyDown={handleEnterKey}
+                            onBlur={handleBlur}
                         />
                         <label
                             htmlFor="exampleSearch2"
@@ -196,6 +231,9 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                         >
                             Buscar usuario...
                         </label>
+                        {showUserList && (
+            <UserList users={userList} onItemClick={handleUserClick} onClose={closeUserList}  />
+          )}
                     </div>
                 </li>
             </ul>

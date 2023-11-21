@@ -57,8 +57,9 @@ export default function SavePost() {
     const allData = async () => {
         const data = await context.getAllFavorite(num);
         console.log(data.content);
+        const reversedArray = [...data.content].reverse();
         setmaxpages(data.total_pages);
-        setArray(data.content);
+        setArray(reversedArray)
     }
 
     const allFavorite = async () =>

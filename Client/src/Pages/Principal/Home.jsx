@@ -58,8 +58,10 @@ export default function Post() {
         const data = await context.getAll(num);
         console.log(data);
         //const pages = data.pages;
+
+        const reversedArray = [...data.content].reverse();
         setmaxpages(data.total_pages);
-        setArray(data.content)
+        setArray(reversedArray)
     }
 
     const allFavorite = async () => {
@@ -109,6 +111,7 @@ export default function Post() {
                 <div className='mt-20'>
                     {array.map((data) => {
                         // Realiza la comprobación fuera del bloque JSX
+                        console.log(data.archived)
                         if (data.archived === false) {
                             // Renderiza el componente solo si la condición se cumple
                             return <PostCard user={data.user} post={data}/>;

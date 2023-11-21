@@ -100,6 +100,12 @@ export const APIProvider = (prop) => {
         return data;
     }
 
+    const findOne = async (id)=>{
+        const tokenData = localStorage.getItem("TOKEN");
+        const data = Post.findOne(token,id);
+        return data;
+    }
+
       
 
       const logout = () => {
@@ -121,8 +127,9 @@ export const APIProvider = (prop) => {
             getAllOwn:getAllOwn,
             getAllFavorite:getAllFavorite,
             register:register,
-            whoami:whoami
-        }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite]
+            whoami:whoami,
+            findOne:findOne
+        }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite,findOne]
     );
     return <APIContext.Provider value={data}>
             {prop.children}

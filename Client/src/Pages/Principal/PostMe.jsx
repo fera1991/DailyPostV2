@@ -57,8 +57,9 @@ export default function SavePost() {
     const allData = async () => {
         const data = await context.getAllOwn(num);
         console.log(data.content);
+        const reversedArray = [...data.content].reverse();
         setmaxpages(data.total_pages);
-        setArray(data.content)
+        setArray(reversedArray)
     }
 
 
@@ -108,14 +109,7 @@ export default function SavePost() {
              
             <div className='mt-20'>
                     {array.map((data) => {
-                        // Realiza la comprobación fuera del bloque JSX
-                        if (data.archived === false) {
-                            // Renderiza el componente solo si la condición se cumple
-                            return <PostCard user={data.user} post={data}/>;
-                        } else {
-                            // Si no se cumple la condición, puedes decidir hacer algo más o simplemente no renderizar nada
-                            return null;
-                        }
+                        return <PostCard user={data.user} post={data}/>;
                     })}
                 </div>
 
