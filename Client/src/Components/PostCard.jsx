@@ -6,26 +6,12 @@ const PostCard = ({ user, post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [showPrimaryCard, setShowPrimaryCard] = useState(true);
-  const [commentText, setCommentText] = useState('');
-  const [comments, setComments] = useState([]); // Nuevo estado para los comentarios
   const [showOptions, setShowOptions] = useState(false);
 
   const handleLike = () => {
     setLikes(prevLikes => prevLikes + (isLiked ? -1 : 1));
     setIsLiked(!isLiked);
   };
-
-  const handleCommentChange = (event) => {
-    setCommentText(event.target.value); // Simplemente actualiza el estado con el valor actual del input
-  };
-
-  const submitComment = () => {
-    if (commentText.trim()) {
-      setComments((prevComments) => [...prevComments, commentText.trim()]);
-      setCommentText('');
-    }
-  };
-
 
   const handleCommentClick = () => {
     setShowPrimaryCard(false);
@@ -105,7 +91,23 @@ const PostCard = ({ user, post }) => {
     </div>
   );
 
-  const SecondaryCard = () => (
+  const SecondaryCard = () => {
+
+    const [commentText, setCommentText] = useState('');
+    const [comments, setComments] = useState([]); // Nuevo estado para los comentarios
+
+    const handleCommentChange = (event) => {
+      setCommentText(event.target.value); // Simplemente actualiza el estado con el valor actual del input
+    };
+  
+    const submitComment = () => {
+      if (commentText.trim()) {
+        setComments((prevComments) => [...prevComments, commentText.trim()]);
+        setCommentText('');
+      }
+    };
+
+    return(
     <div className=" text-black post-card">
       <div className="container relative mx-auto min-h-48 flex items-center justify-center p-10 px-6">
         <button onClick={() => setShowPrimaryCard(true)} className="absolute top-7 right-[-20px] mt-2 mr-2 text-xl font-bold text-black hover:text-red-500" title="close post">
@@ -201,7 +203,7 @@ const PostCard = ({ user, post }) => {
         </div>
       </div>
     </div>
-  );
+  )};
 
   return (
     <div className="container mx-auto px-20">
