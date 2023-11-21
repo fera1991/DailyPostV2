@@ -1,7 +1,7 @@
 import React from 'react';
 import DailyPost_logo from '../../assets/img/DailyPost_logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faKey, faUser} from '@fortawesome/free-solid-svg-icons';
+import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useAPIContext } from "../../Context/Context";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
@@ -30,46 +30,41 @@ export default function Login() {
     }
   }
 
-  if(context.token){
-  console.log("ya existe su loggeo")
-  navigate("/home")
+  if (context.token) {
+    console.log("ya existe su loggeo")
+    navigate("/home")
   }
 
   const { register, handleSubmit, } = useForm();
 
   return (
 
-    <div className=" flex justify-center items-center min-h-screen bg-purple-50">
-      <main className="bg-white max-w-lg p-8 md:p-12 my-10 rounded-sm shadow-2xl m-4">
-        <img src={DailyPost_logo} alt="Daily Post"></img>
-        <label className="font-sans text-gray-500 pt-2 mt-4">Inicie sesión en su cuenta</label>
-        <form className="flex flex-col justify-center" onSubmit={handleSubmit(onSubmit)}>
-          {Error === true && <div className="text-red-500 text-xs">Inicio de sesion fallido</div>}
-          <div className=" flex items-center">
-            <div className="grid-rows ">
-              <FontAwesomeIcon className="w-5 h-5 mr-2  mt-3" icon={faUser} />
-            </div>
-            <div>
-              <input className=" font-sans bg-gray-100 border h-5 w-96 py-4 mt-4 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="text" placeholder="Usuario o correo electrónico" {...register("user", { required: true })}>
-              </input>
-            </div>
+    <div className="flex justify-center items-center min-h-screen bg-purple-50 px-4">
+      <main className="bg-white w-full max-w-md p-6 rounded-lg shadow-xl">
+        <img src={DailyPost_logo} alt="Daily Post" className="mx-auto w-32 md:w-48"></img>
+        <h2 className="text-gray-700 text-lg md:text-xl text-center mt-4 mb-6">Inicie sesión en su cuenta</h2>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          {Error && <div className="text-red-500 text-sm text-center">Inicio de sesión fallido</div>}
+
+          <div className="flex items-center space-x-2">
+            <FontAwesomeIcon className="w-5 h-5 text-gray-600" icon={faUser} />
+            <input className="bg-gray-100 border flex-1 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300" type="text" placeholder="Usuario o correo electrónico" {...register("user", { required: true })}></input>
           </div>
-          <div className="flex items-center">
-            <div className="grid-rows">
-              <FontAwesomeIcon className=" w-5 h-5 mr-2 mt-5" icon={faKey} />
-            </div>
-            <div className='text-left'>
-              <input className="font-sans block bg-gray-100 border h-5 w-96 py-4 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm" type="password" placeholder="Contraseña"  {...register("password", { required: true })}>
-              </input>
-            </div>
+
+          <div className="flex items-center space-x-2">
+            <FontAwesomeIcon className="w-5 h-5 text-gray-600" icon={faKey} />
+            <input className="bg-gray-100 border flex-1 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300" type="password" placeholder="Contraseña" {...register("password", { required: true })}></input>
           </div>
-          <button className="font-sans bg-purple-400 hover:bg-purple-500 text-white font-bold py-1 px-4 mt-4 rounded-sm">INICIAR SESIÓN</button>
+
+          <button className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-md w-full mt-6">INICIAR SESIÓN</button>
         </form>
-        <div className='mt-4'>
-          <Link to="/checkin">
-          <p href="">¿No tiene una cuenta? <a class="#" className='ml-1 text-blue-500' href="http://">Registrate</a></p></Link>
-        </div>
+
+        <p className="text-center mt-6 text-sm text-gray-600">
+          ¿No tiene una cuenta? <Link to="/checkin" className='text-blue-500'>Registrate</Link>
+        </p>
       </main>
     </div>
+
+
   )
 }
