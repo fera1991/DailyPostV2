@@ -88,6 +88,11 @@ export const APIProvider = (prop) => {
         return data
     }
 
+    const getAllOwn = async (num)=>{
+        const tokenData = localStorage.getItem("TOKEN");
+        const data = Post.findOwn(tokenData,num);
+        return data
+    }
 
       
 
@@ -106,8 +111,9 @@ export const APIProvider = (prop) => {
             logout:logout,
             getAll:getAll,
             create:create,
-            getToken:getToken
-        }),[token,username,login,logout,getAll,create,getToken]
+            getToken:getToken,
+            getAllOwn:getAllOwn
+        }),[token,username,login,logout,getAll,create,getToken,getAllOwn]
     );
     return <APIContext.Provider value={data}>
             {prop.children}
