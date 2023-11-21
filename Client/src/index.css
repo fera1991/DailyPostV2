@@ -7,13 +7,13 @@
     margin: 20px auto; /* Espaciado y centrado */
   }
   
-  @media (min-width: 600px) { /* Para pantallas medianas */
+  @media (min-width: 100px) { /* Para pantallas medianas */
     .post-card {
-      max-width: 80%; /* Más ancho en pantallas medianas */
+      max-width: 100%; /* Más ancho en pantallas medianas */
     }
   }
   
-  @media (min-width: 1024px) { /* Para pantallas grandes */
+  @media (min-width: 1080px) { /* Para pantallas grandes */
     .post-card {
       max-width: 100%; /* Ajuste para pantallas grandes */
     }
