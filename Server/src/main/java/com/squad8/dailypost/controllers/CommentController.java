@@ -75,9 +75,8 @@ public class CommentController {
 		}
 		
 		try {
-			commentService.save(info, post, user);
-			return new ResponseEntity<>(
-					new MessageDTO("Comment Created"), HttpStatus.CREATED);
+			Comment comment = commentService.save(info, post, user);
+			return new ResponseEntity<>(comment, HttpStatus.CREATED);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

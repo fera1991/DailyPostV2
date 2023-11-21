@@ -22,10 +22,11 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	@Transactional(rollbackOn = Exception.class)
-	public void save(SaveCommentDTO info, Post post , User user) throws Exception {
+	public Comment save(SaveCommentDTO info, Post post , User user) throws Exception {
 		
 		Comment comment = new Comment(post, user, info.getText());
 		commentRepository.save(comment);
+		return comment;
 	}
 
 	@Override

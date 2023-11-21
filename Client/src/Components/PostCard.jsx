@@ -14,7 +14,6 @@ const PostCard = ({post, listSaved, userLogin}) => {
     const result = await context.getAllLikes(post.code);
     if (result) {
       setLikes(result.length);
-      console.log(userLogin);
       const bollLiked = result.some(data => data.user.code === userLogin.code);
       if (bollLiked) {
         setIsLiked(true);
@@ -129,12 +128,29 @@ const PostCard = ({post, listSaved, userLogin}) => {
       setCommentText(event.target.value); // Simplemente actualiza el estado con el valor actual del input
     };
 
-    const submitComment = () => {
+    const submitComment = async() => {
       if (commentText.trim()) {
+        const result = await context.saveComment(post.code, commentText.trim());
+        if(result){
         setComments((prevComments) => [...prevComments, commentText.trim()]);
         setCommentText('');
+        }
       }
     };
+
+    const getComments = async () =>{
+      const result = await context.comment(post.code);
+      if(result){
+        console.log(result);
+        setComments(result.comments);
+      }
+    }
+
+    useEffect(() => {
+      getComments();
+    }, [])
+
+    
 
     return (
       <div className=" text-black post-card">
@@ -181,9 +197,9 @@ const PostCard = ({post, listSaved, userLogin}) => {
                   <span className="font-bold">{post.user.username}: </span>{post.description}
                 </div>
 
-                {comments.map((comment, index) => (
-                  <div key={index} className="mb-2">
-                    <span className="font-bold">{post.user.username}: </span>{comment}
+                {comments.map((comment) => (
+                  <div  className="mb-2">
+                    <span className="font-bold">{comment.user.username}: </span>{comment.text}
                   </div>
                 ))}
               </div>

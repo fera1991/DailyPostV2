@@ -135,12 +135,22 @@ export const APIProvider = (prop) => {
         return data;
     }
 
-      const logout = () => {
+    const logout = () => {
           localStorage.setItem("TOKEN",undefined);
           setToken(undefined);
           setUsername(undefined);
       }
     
+    const comment = (id) => {
+        const tokenData = localStorage.getItem("TOKEN");
+        const data = Post.comment(tokenData,id);
+        return data;
+    }
+    const saveComment = (id,text) => {
+        const tokenData = localStorage.getItem("TOKEN");
+        const data = Post.saveComment(tokenData,id,text);
+        return data;
+    }
 
     const data = useMemo(
         ()=> ({
@@ -159,8 +169,10 @@ export const APIProvider = (prop) => {
             savePost:savePost,
             likePost:likePost,
             getAllFavoriteEntirety:getAllFavoriteEntirety,
-            getAllLikes:getAllLikes
-        }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite,findOne,savePost,likePost,getAllFavoriteEntirety]
+            getAllLikes:getAllLikes,
+            comment:comment,
+            saveComment:saveComment
+        }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite,findOne,savePost,likePost,getAllFavoriteEntirety,comment,saveComment]
     );
     return <APIContext.Provider value={data}>
             {prop.children}
