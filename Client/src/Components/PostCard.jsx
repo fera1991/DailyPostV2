@@ -132,7 +132,7 @@ const PostCard = ({post, listSaved, userLogin}) => {
       if (commentText.trim()) {
         const result = await context.saveComment(post.code, commentText.trim());
         if(result){
-        setComments((prevComments) => [...prevComments, commentText.trim()]);
+        setComments((prevComments) => [...prevComments, result]);
         setCommentText('');
         }
       }
@@ -146,7 +146,7 @@ const PostCard = ({post, listSaved, userLogin}) => {
       }
     }
 
-    useEffect(() => {
+    useEffect(() => { 
       getComments();
     }, [])
 
