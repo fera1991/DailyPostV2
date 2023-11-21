@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.post-card {
+    max-width: 100%; /* Ocupar todo el ancho en dispositivos pequeños */
+    margin: 20px auto; /* Espaciado y centrado */
+  }
+  
+  @media (min-width: 600px) { /* Para pantallas medianas */
+    .post-card {
+      max-width: 80%; /* Más ancho en pantallas medianas */
+    }
+  }
+  
+  @media (min-width: 1024px) { /* Para pantallas grandes */
+    .post-card {
+      max-width: 100%; /* Ajuste para pantallas grandes */
+    }
+  }
+  
+  @media (min-width: 1440px) { /* Para pantallas muy grandes */
+    .post-card {
+      max-width: 100%; /* Un ajuste más amplio para pantallas muy grandes */
+    }
+  }
+  
+  
+  

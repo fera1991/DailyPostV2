@@ -16,14 +16,13 @@ const PostCard = ({ user, post }) => {
   };
 
   const handleCommentChange = (event) => {
-    setCommentText(event.target.value);
+    setCommentText(event.target.value); // Simplemente actualiza el estado con el valor actual del input
   };
 
-
   const submitComment = () => {
-    if (commentText) {
-      setComments([...comments, commentText]); // Agrega el comentario al estado
-      setCommentText(''); // Limpia el campo de texto
+    if (commentText.trim()) {
+      setComments((prevComments) => [...prevComments, commentText.trim()]);
+      setCommentText('');
     }
   };
 
@@ -41,14 +40,14 @@ const PostCard = ({ user, post }) => {
   };
 
   const PrimaryCard = () => (
-    <div className="container mx-auto px-20">
+    <div className="container mx-auto px-20 post-card" >
       <div className="min-h-48 flex items-center justify-center p-7 px-6">
         <div className="bg-gray-100 text-black rounded-md shadow-md sm:w-96">
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center space-x-2">
               <div className="-space-y-1">
                 <h2 className="text-sm font-semibold leading-none">{user.username}</h2>
-                <span className="inline-block text-xs leading-none text-gray-400">{post.title}</span>
+                <span className="inline-block text-xs leading-none text-gray-500">{post.title}</span>
               </div>
             </div>
             <button onClick={toggleOptions} title="Open options" type="button">
@@ -107,7 +106,7 @@ const PostCard = ({ user, post }) => {
   );
 
   const SecondaryCard = () => (
-    <div className=" text-black">
+    <div className=" text-black post-card">
       <div className="container relative mx-auto min-h-48 flex items-center justify-center p-10 px-6">
         <button onClick={() => setShowPrimaryCard(true)} className="absolute top-7 right-[-20px] mt-2 mr-2 text-xl font-bold text-black hover:text-red-500" title="close post">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -127,7 +126,7 @@ const PostCard = ({ user, post }) => {
               <div className="flex items-center">
                 <div className="-space-y-1">
                   <h2 className="text-sm font-semibold leading-none">{user.username}</h2>
-                  <span className="inline-block text-xs leading-none text-gray-400">{post.title}</span>
+                  <span className="inline-block text-xs leading-none text-gray-500">{post.title}</span>
                 </div>
               </div>
               <button onClick={toggleOptions} title="Open options" type="button">
