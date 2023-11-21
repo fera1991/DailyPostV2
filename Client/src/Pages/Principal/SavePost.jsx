@@ -20,8 +20,10 @@ export default function SavePost() {
     const [userOptions,setUserOptions] = useState(false);
     const context = useAPIContext();
     const [array,setArray] = useState([]);
+    const [arrayFavorite,setArrayFavorite] = useState([]);
     const [num,setNum]= useState(0);
     const [maxpages,setmaxpages]= useState(0);
+    const [user, setUser] = useState(null);
 
     const search = async(id) =>{
         
@@ -57,6 +59,14 @@ export default function SavePost() {
     const allData = async () => {
         const data = await context.getAllFavorite(num);
         console.log(data.content);
+        const response = await context.getAllFavoriteEntirety();
+        console.log(response);
+        if(response){
+            setArrayFavorite(response);
+        }
+        const user = await context.whoami();
+        setUser(user);
+
         const reversedArray = [...data.content].reverse();
         setmaxpages(data.total_pages);
         setArray(reversedArray)
@@ -111,7 +121,7 @@ export default function SavePost() {
                         console.log(data.post)
                         if (data.post.archived === false) {
                             // Renderiza el componente solo si la condición se cumple
-                            return <PostCard user={data.user} post={data.post}/>;
+                            return <PostCard post={data.post} listSaved={arrayFavorite} userLogin={user}/>;
                         } else {
                             // Si no se cumple la condición, puedes decidir hacer algo más o simplemente no renderizar nada
                             return null;

@@ -2,13 +2,14 @@ import react from "react";
 import { useMemo,useEffect,useState,createContext} from "react";
 import { Auth } from "../Services/Auth";
 import { Post } from "../Services/Post";
+import { Result } from "postcss";
 
 const APIContext = createContext();
 
 export const APIProvider = (prop) => {
 
     const [token, setToken] = useState("");
-    const [username,setUsername] = useState("");
+    const [username,setUsername] = useState(null);
     
     const getToken = () => {
         const tokenData = localStorage.getItem("TOKEN");
@@ -20,6 +21,10 @@ export const APIProvider = (prop) => {
 
     useEffect(() => {
         getToken();
+        const user = whoami();
+        if(user){
+            setUsername(user);
+        }
       }, [token]); 
 
     const login = async (user ,password)=>{
@@ -100,13 +105,35 @@ export const APIProvider = (prop) => {
         return data;
     }
 
+    const getAllFavoriteEntirety = async ()=>{
+        const tokenData = localStorage.getItem("TOKEN");
+        const data = Post.Allfavorite(tokenData);
+        return data;
+    }
+
+    const getAllLikes = async (id)=>{
+        const tokenData =localStorage.getItem("TOKEN");
+        const data = Post.AllLikes(tokenData,id);
+        return data;
+    }
+
     const findOne = async (id)=>{
         const tokenData = localStorage.getItem("TOKEN");
         const data = Post.findOne(token,id);
         return data;
     }
 
-      
+    const savePost = async (id)=>{
+        const tokenData = localStorage.getItem("TOKEN");
+        const data = Post.favorite(tokenData,id);
+        return data;
+    } 
+
+    const likePost = async (id)=>{
+        const tokenData = localStorage.getItem("TOKEN");
+        const data = Post.like(tokenData,id);
+        return data;
+    }
 
       const logout = () => {
           localStorage.setItem("TOKEN",undefined);
@@ -128,8 +155,12 @@ export const APIProvider = (prop) => {
             getAllFavorite:getAllFavorite,
             register:register,
             whoami:whoami,
-            findOne:findOne
-        }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite,findOne]
+            findOne:findOne,
+            savePost:savePost,
+            likePost:likePost,
+            getAllFavoriteEntirety:getAllFavoriteEntirety,
+            getAllLikes:getAllLikes
+        }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite,findOne,savePost,likePost,getAllFavoriteEntirety]
     );
     return <APIContext.Provider value={data}>
             {prop.children}

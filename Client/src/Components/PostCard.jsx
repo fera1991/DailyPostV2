@@ -1,16 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAPIContext } from "../Context/Context";
 
-const PostCard = ({ user, post }) => {
+const PostCard = ({post, listSaved, userLogin}) => {
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [showPrimaryCard, setShowPrimaryCard] = useState(true);
   const [showOptions, setShowOptions] = useState(false);
+  const context = useAPIContext();
 
-  const handleLike = () => {
-    setLikes(prevLikes => prevLikes + (isLiked ? -1 : 1));
-    setIsLiked(!isLiked);
+  const searchAndActivate = async () => {
+    const result = await context.getAllLikes(post.code);
+    if (result) {
+      setLikes(result.length);
+      console.log(userLogin);
+      const bollLiked = result.some(data => data.user.code === userLogin.code);
+      if (bollLiked) {
+        setIsLiked(true);
+      }
+    }
+    const boolSaved = listSaved.some(data => data.post.code === post.code);
+    if (boolSaved) {
+      setIsSaved(true);
+    }
+  }
+
+  useEffect(() => {
+    searchAndActivate();
+  }, [])
+
+  const handleLike = async () => {
+    const response = await context.likePost(post.code);
+    if (response) {
+      setLikes(prevLikes => prevLikes + (isLiked ? -1 : 1));
+      setIsLiked(!isLiked);
+    }
   };
 
   const handleCommentClick = () => {
@@ -21,9 +46,13 @@ const PostCard = ({ user, post }) => {
     setShowOptions(!showOptions);
   };
 
-  const handleBookmark = () => {
-    setIsSaved(!isSaved);
+  const handleBookmark = async () => {
+    const response = await context.savePost(post.code);
+    if (response) {
+      setIsSaved(!isSaved);
+    }
   };
+
 
   const PrimaryCard = () => (
     <div className="container mx-auto px-20 post-card flex justify-center items-center " >
@@ -32,7 +61,7 @@ const PostCard = ({ user, post }) => {
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center space-x-2">
               <div className="-space-y-1">
-                <h2 className="text-sm font-semibold leading-none">{user.username}</h2>
+                <h2 className="text-sm font-semibold leading-none">{post.user.username}</h2>
                 <span className="inline-block text-xs leading-none text-gray-500">{post.title}</span>
               </div>
             </div>
@@ -84,7 +113,7 @@ const PostCard = ({ user, post }) => {
                 <div className="text-sm font-semibold">{likes} Me gusta</div>
               </div>
             </div>
-            <span className="mt-2 font-bold">{user.username}: </span>{post.description}
+            <span className="mt-2 font-bold">{post.user.username}: </span>{post.description}
           </div>
         </div>
       </div>
@@ -109,7 +138,7 @@ const PostCard = ({ user, post }) => {
 
     return (
       <div className=" text-black post-card">
-        <div className="container relative mx-auto min-h-48 flex items-center justify-center p-10 px-6" style={{ padding: '20px'}}>
+        <div className="container relative mx-auto min-h-48 flex items-center justify-center p-10 px-6" style={{ padding: '20px' }}>
           <button onClick={() => setShowPrimaryCard(true)} className="absolute top-7 right-[-20px] mt-2 mr-2 text-xl font-bold text-black hover:text-red-500" title="close post">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -127,7 +156,7 @@ const PostCard = ({ user, post }) => {
               <div className="flex items-center justify-between border-b border-black p-2">
                 <div className="flex items-center">
                   <div className="-space-y-1">
-                    <h2 className="text-sm font-semibold leading-none">{user.username}</h2>
+                    <h2 className="text-sm font-semibold leading-none">{post.user.username}</h2>
                     <span className="inline-block text-xs leading-none text-gray-500">{post.title}</span>
                   </div>
                 </div>
@@ -149,12 +178,12 @@ const PostCard = ({ user, post }) => {
 
               <div className="flex-1 overflow-y-auto p-2">
                 <div className="mb-2">
-                  <span className="font-bold">{user.username}: </span>{post.description}
+                  <span className="font-bold">{post.user.username}: </span>{post.description}
                 </div>
 
                 {comments.map((comment, index) => (
                   <div key={index} className="mb-2">
-                    <span className="font-bold">{user.username}: </span>{comment}
+                    <span className="font-bold">{post.user.username}: </span>{comment}
                   </div>
                 ))}
               </div>

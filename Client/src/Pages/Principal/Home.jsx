@@ -21,14 +21,15 @@ export default function Post() {
     const [userOptions, setUserOptions] = useState(false);
     const context = useAPIContext();
     const [array, setArray] = useState([]);
+    const [arrayFavorite,setArrayFavorite] = useState([]);
     const [num, setNum] = useState(0);
     const [maxpages, setmaxpages] = useState(0);
+    const [user, setUser] = useState(null);
 
     const search = async (id) => {
 
         const data = [];
         const item = await context.getOne(id);
-        console.log(item);
         if (item) {
             data.push(item);
             setArray(data);
@@ -39,13 +40,11 @@ export default function Post() {
     const sum = () => {
         if (num < maxpages) {
             setNum(num + 1);
-            console.log(num);
         }
     }
     const subtraction = () => {
         if (num > 0) {
             setNum(num - 1);
-            console.log(num);
         }
     }
     const reload = async () => {
@@ -56,8 +55,13 @@ export default function Post() {
 
     const allData = async () => {
         const data = await context.getAll(num);
-        console.log(data);
+        const response = await context.getAllFavoriteEntirety();
+        if(response){
+            setArrayFavorite(response);
+        }
         //const pages = data.pages;
+        const user = await context.whoami();
+        setUser(user);
 
         const reversedArray = [...data.content].reverse();
         setmaxpages(data.total_pages);
@@ -90,7 +94,6 @@ export default function Post() {
 
     const ownedData = async () => {
         const data = await context.getOwn(num);
-        console.log(data);
         if (data) {
             setArray(data);
         }
@@ -111,10 +114,9 @@ export default function Post() {
                 <div className='mt-20'>
                     {array.map((data) => {
                         // Realiza la comprobación fuera del bloque JSX
-                        console.log(data.archived)
                         if (data.archived === false) {
                             // Renderiza el componente solo si la condición se cumple
-                            return <PostCard user={data.user} post={data}/>;
+                            return <PostCard post={data} listSaved={arrayFavorite} userLogin={user}/>;
                         } else {
                             // Si no se cumple la condición, puedes decidir hacer algo más o simplemente no renderizar nada
                             return null;

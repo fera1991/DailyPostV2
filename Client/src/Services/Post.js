@@ -12,7 +12,6 @@ export const Post = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
@@ -29,7 +28,6 @@ export const Post = {
                   Authorization: `Bearer ${token}`,
                 }
             });
-            console.log(data);
             if(data.status === 201)
             {
                 return data.data
@@ -50,7 +48,6 @@ export const Post = {
                   Authorization: `Bearer ${token}`,
                 }
             });
-            console.log(data);
             if(data.status === 201)
             {
                 return data.data
@@ -70,7 +67,6 @@ export const Post = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
@@ -86,7 +82,6 @@ export const Post = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
@@ -95,14 +90,13 @@ export const Post = {
     },
     like: async (token,id) => {
         try {
-            const data = await axios.patch(`${URL}/post/like/${id}`,
+            const data = await axios.patch(`${URL}/post/like/${id}`,{},
             {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
@@ -118,7 +112,6 @@ export const Post = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
@@ -127,20 +120,51 @@ export const Post = {
     },
     favorite: async (token,id) => {
         try {
-            const data = await axios.patch(`${URL}/post/fav/${id}`,
+            console.log(id);
+            const data = await axios.patch(`${URL}/post/fav/${id}`,{},
             {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
             return false; 
         }
     },
+    Allfavorite: async (token) => {
+        try {
+            const data = await axios.get(`${URL}/post/fav/entirety`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
+    AllLikes: async (token,id) => {
+        try {
+            const data = await axios.get(`${URL}/post/like/${id}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+            }
+            );
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            return false; 
+        }
+    },
+    
     comment: async (token,id) => {
         try {
             const data = await axios.get(`${URL}/post/comment/${id}`,
@@ -150,7 +174,6 @@ export const Post = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
@@ -166,7 +189,6 @@ export const Post = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
@@ -182,7 +204,6 @@ export const Post = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);

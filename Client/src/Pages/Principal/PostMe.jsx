@@ -20,8 +20,10 @@ export default function SavePost() {
     const [userOptions,setUserOptions] = useState(false);
     const context = useAPIContext();
     const [array,setArray] = useState([]);
+    const [arrayFavorite,setArrayFavorite] = useState([]);
     const [num,setNum]= useState(0);
     const [maxpages,setmaxpages]= useState(0);
+    const [user, setUser] = useState(null);
 
     const search = async(id) =>{
         
@@ -57,6 +59,13 @@ export default function SavePost() {
     const allData = async () => {
         const data = await context.getAllOwn(num);
         console.log(data.content);
+        const response = await context.getAllFavoriteEntirety();
+        if(response){
+            setArrayFavorite(response);
+        }
+        const user = await context.whoami();
+        setUser(user);
+
         const reversedArray = [...data.content].reverse();
         setmaxpages(data.total_pages);
         setArray(reversedArray)
@@ -109,7 +118,7 @@ export default function SavePost() {
              
             <div className='mt-20'>
                     {array.map((data) => {
-                        return <PostCard user={data.user} post={data}/>;
+                        return <PostCard  post={data} listSaved={arrayFavorite} userLogin={user}/>;
                     })}
                 </div>
 
