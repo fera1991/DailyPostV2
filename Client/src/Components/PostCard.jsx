@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAPIContext } from "../Context/Context";
 
-const PostCard = ({post, listSaved, userLogin}) => {
+const PostCard = ({ post, listSaved, userLogin }) => {
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -54,9 +54,9 @@ const PostCard = ({post, listSaved, userLogin}) => {
 
 
   const PrimaryCard = () => (
-    <div className="container mx-auto px-20 post-card flex justify-center items-center " >
-      <div className="flex items-center justify-center p-7 px-6" style={{ width: '90%', height: 'auto', maxWidth: '800px', minHeight: '500px' }}>
-        <div className="bg-gray-100 text-black rounded-md shadow-md sm:w-full" style={{ width: '80%', height: '80%' }}>
+    <div className="container mx-auto px-20 post-card flex justify-center items-center">
+      <div className="flex items-center justify-center p-7 px-6" style={{ width: '90%', height: '90%', maxWidth: '600px', minHeight: '300px' }}> {/* Ajustado aquí */}
+        <div className="bg-gray-100 text-black rounded-md shadow-md sm:w-full" style={{ width: '100%', height: '100%' }}>
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center space-x-2">
               <div className="-space-y-1">
@@ -79,7 +79,9 @@ const PostCard = ({post, listSaved, userLogin}) => {
               </div>
             )}
           </div>
-          <img src={post.image} alt="" className="bg-coolGray-500 h-70 w-full object-cover object-center" />
+          <img src={post.image} alt="" className="bg-coolGray-500 w-full object-cover object-center" style={{
+            maxHeight: '50%', // Ajustado para utilizar el 100% de la altura del contenedor
+            objectFit: 'cover', }} />
           <div className="p-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -128,29 +130,29 @@ const PostCard = ({post, listSaved, userLogin}) => {
       setCommentText(event.target.value); // Simplemente actualiza el estado con el valor actual del input
     };
 
-    const submitComment = async() => {
+    const submitComment = async () => {
       if (commentText.trim()) {
         const result = await context.saveComment(post.code, commentText.trim());
-        if(result){
-        setComments((prevComments) => [...prevComments, result]);
-        setCommentText('');
+        if (result) {
+          setComments((prevComments) => [...prevComments, result]);
+          setCommentText('');
         }
       }
     };
 
-    const getComments = async () =>{
+    const getComments = async () => {
       const result = await context.comment(post.code);
-      if(result){
+      if (result) {
         console.log(result);
         setComments(result.comments);
       }
     }
 
-    useEffect(() => { 
+    useEffect(() => {
       getComments();
     }, [])
 
-    
+
 
     return (
       <div className=" text-black post-card">
@@ -198,7 +200,7 @@ const PostCard = ({post, listSaved, userLogin}) => {
                 </div>
 
                 {comments.map((comment) => (
-                  <div  className="mb-2">
+                  <div className="mb-2">
                     <span className="font-bold">{comment.user.username}: </span>{comment.text}
                   </div>
                 ))}
