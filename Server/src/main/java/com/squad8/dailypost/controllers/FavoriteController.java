@@ -62,7 +62,7 @@ public class FavoriteController {
 		Boolean flag = false;
 		String idFavorite = "";
 		for (Favorite element: user.getFavorites()) {
-			if(element.getUser().equals(user)) {
+			if(element.getPost().equals(post)) {
 				flag = true;
 				idFavorite = element.getCode().toString();
 			}
