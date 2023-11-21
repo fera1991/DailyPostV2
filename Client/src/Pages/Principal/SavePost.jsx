@@ -54,11 +54,12 @@ export default function SavePost() {
         setNum(0);
     }
 
-    const allData = async () =>{
+    const allData = async () => {
         const data = await context.getAll(num);
-        const pages = data.pages;
-        setmaxpages(pages);
-        setArray(data.data)
+        console.log(data);
+        //const pages = data.pages;
+        setmaxpages(data.total_pages);
+        setArray(data.content)
     }
 
     const allFavorite = async () =>
@@ -105,9 +106,7 @@ export default function SavePost() {
         
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
 
-                <div>
-                <PostCard />
-                </div>
+           
 
             </div>
         </>
