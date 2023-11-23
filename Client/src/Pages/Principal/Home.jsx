@@ -95,6 +95,10 @@ export default function Post() {
         reload();
     }
 
+    const archivePost = (code) => {
+        const newList = array.filter(objet => objet.code !== code);
+        setArray(newList);
+    }
 
 
     return (
@@ -108,7 +112,7 @@ export default function Post() {
                         // Realiza la comprobación fuera del bloque JSX
                         if (data.archived === false) {
                             // Renderiza el componente solo si la condición se cumple
-                            return <PostCard post={data} listSaved={arrayFavorite} userLogin={user} />;
+                            return <PostCard post={data} listSaved={arrayFavorite} userLogin={user} archivePost={archivePost}/>;
                         } else {
                             // Si no se cumple la condición, puedes decidir hacer algo más o simplemente no renderizar nada
                             return null;

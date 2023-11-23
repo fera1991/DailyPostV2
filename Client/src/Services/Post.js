@@ -105,7 +105,7 @@ export const Post = {
     },
     toggle: async (token,id) => {
         try {
-            const data = await axios.patch(`${URL}/post/toggle/${id}`,
+            const data = await axios.patch(`${URL}/post/toggle/${id}`,{},
             {
                 headers: {
                   Authorization: `Bearer ${token}`,

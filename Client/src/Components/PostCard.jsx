@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAPIContext } from "../Context/Context";
 
-const PostCard = ({ post, listSaved, userLogin }) => {
+const PostCard = ({ post, listSaved, userLogin , archivePost }) => {
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -52,6 +52,15 @@ const PostCard = ({ post, listSaved, userLogin }) => {
     }
   };
 
+  const handleEliminarClick = async () => {
+    const response = await context.toggle(post.code);
+    console.log(response);
+    toggleOptions();
+    if(response.message !== "Post active"){
+      archivePost(post.code);
+    }
+  }
+
 
   const PrimaryCard = () => (
     <div className="container mx-auto px-20 post-card flex justify-center items-center">
@@ -64,17 +73,23 @@ const PostCard = ({ post, listSaved, userLogin }) => {
                 <span className="inline-block text-xs leading-none text-gray-500">{post.title}</span>
               </div>
             </div>
-            <button onClick={toggleOptions} title="Open options" type="button">
+            { post.user.code === userLogin.code && (
+              <button onClick={toggleOptions} title="Open options" type="button">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
               </svg>
 
             </button>
+            )}
             {showOptions && (
               <div className="absolute bg-white rounded shadow-md mt-7" style={{ marginLeft: '460px' }}>
                 <ul>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Editar</li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Eliminar</li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <Link to={`/updatePost/${post.code}`}>Editar</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                   onClick={handleEliminarClick}
+                  >Eliminar</li>
                 </ul>
               </div>
             )}

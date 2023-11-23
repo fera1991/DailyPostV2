@@ -1,18 +1,16 @@
 import React from 'react';
 import DailyPost_logo from '../../assets/img/DailyPost_logo.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faKey, faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useAPIContext } from "../../Context/Context";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate ,useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { uploadFile} from '../../firebase/config'
 
-export default function updatePost() {
+export default function UpdatePost() {
 
 const context = useAPIContext(); 
 const navigate = useNavigate();
-const { postId } = useParams();
+const { id } = useParams();
 
 const {
   register,
@@ -36,24 +34,6 @@ const onSubmit = async (data) => {
     return;
   }
 
-  useEffect(() => {
-    const fetchPostDetails = async () => {
-      try {
-        const postDetails = await context.findOne(postId);
-
-        // Inicializa los campos del formulario con los datos obtenidos
-        //setValue('title', postDetails.title);
-        //setValue('description', postDetails.description);
-        // Puedes agregar más campos según sea necesario
-      } catch (error) {
-        console.error('Error al obtener detalles del post:', error);
-      }
-    };
-
-    fetchPostDetails();
-  }, [context, postId, setValue]);
-  
-
   try {
     const url = await uploadFile(imageFile);
     console.log(url);
@@ -70,6 +50,26 @@ const onSubmit = async (data) => {
     console.error(error);
   }
 };
+
+ useEffect(() => {
+    const fetchPostDetails = async () => {
+      try {
+        const postDetails = await context.findOne(id);
+        console.log(postDetails);
+        // Inicializa los campos del formulario con los datos obtenidos
+        setValue('title', postDetails.title);
+        setValue('description', postDetails.description);
+        const preview = document.getElementById('image-preview');
+        preview.src = postDetails.image;
+        
+        // Puedes agregar más campos según sea necesario
+      } catch (error) {
+        console.error('Error al obtener detalles del post:', error);
+      }
+    };
+
+    fetchPostDetails();
+  }, []);
 
 function previewImage(e) {
   const input = e.target;
@@ -96,7 +96,7 @@ return (
         <a className="text-3xl font-extrabold center flex items-center justify-center ">
           <img src={DailyPost_logo} className="h-8" alt="DailyPost Logo" />
         </a>
-        <h1 className="text-3xl font-extrabold text-center">Crear Post</h1>
+        <h1 className="text-3xl font-extrabold text-center">Modificar Post</h1>
       </div>
     </div>
     <div className="container ml-auto mr-auto flex items-center justify-center ">
@@ -194,7 +194,7 @@ return (
               className="bg-yellow-200 hover:bg-yellow-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              Postear
+              Actualizar
             </button>
             <Link to="/home">
               <button
