@@ -38,19 +38,19 @@ export const Post = {
             return undefined;
         }
     },
-    update: async (token,title,description,image, id) => {
+    update: async (token,title,description,image,id) => {
         console.log(token);
 
         try {
-            const data = await axios.put(`${URL}/post/create/${id}`,{title: title,image: image,description: description},
+            const data = await axios.put(`${URL}/post/update/${id}`,{title: title,image: image,description: description},
             {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 }
             });
-            if(data.status === 201)
+            if(data.status === 200)
             {
-                return data.data
+                return data
             }
 
         } catch (error) {

@@ -71,7 +71,20 @@ export const APIProvider = (prop) => {
             return false;
         }
       }
+      const update = async (title,description,image,id)=>{
+        try {
+            const data = await Post.update(token,title,description,image,id);
+            console.log(data);
+            if(data)
+            {
+                return true
+            }
+            return false;
 
+        } catch (error) {
+            console.log(error);
+        }
+      }
       const create = async (title,description,image)=>{
         try {
             const data = await Post.create(token,title,description,image);
@@ -125,7 +138,7 @@ export const APIProvider = (prop) => {
 
     const findOne = async (id)=>{
         const tokenData = localStorage.getItem("TOKEN");
-        const data = Post.findOne(token,id);
+        const data = Post.findOne(tokenData,id);
         return data;
     }
 
@@ -178,7 +191,8 @@ export const APIProvider = (prop) => {
             getAllLikes:getAllLikes,
             comment:comment,
             saveComment:saveComment,
-            toggle:toggle
+            toggle:toggle,
+            update:update
         }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite,findOne,savePost,likePost,getAllFavoriteEntirety,comment,saveComment]
     );
     return <APIContext.Provider value={data}>

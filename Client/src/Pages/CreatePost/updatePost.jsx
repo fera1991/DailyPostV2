@@ -11,6 +11,7 @@ export default function UpdatePost() {
 const context = useAPIContext(); 
 const navigate = useNavigate();
 const { id } = useParams();
+const [post, setPost] = useState(null);
 
 const {
   register,
@@ -19,15 +20,11 @@ const {
   formState: { errors },
 } = useForm();
 
-const [imageFile, setImageFile] = React.useState(null);
+const [imageFile, setImageFile] = useState(null);
 
 const onSubmit = async (data) => {
   const {title, description } = data;
   console.log(data);
-  if (!imageFile) {
-    console.error('Selecciona una imagen antes de postear.');
-    return;
-  }
 
   if (!title || !description) {
     console.error('Asegúrate de completar todos los campos.');
@@ -35,9 +32,15 @@ const onSubmit = async (data) => {
   }
 
   try {
-    const url = await uploadFile(imageFile);
-    console.log(url);
-    const info = await context.create(data.title,data.description,url);
+    let url = "";
+    if(imageFile){
+      url = await uploadFile(imageFile);
+      console.log(url);
+    }
+    else{
+      url =  post.image;
+    }
+    const info = await context.update(data.title,data.description,url,post.code);
     if (info) {
       console.log("Creacion completado")
       navigate("/home")
@@ -61,7 +64,7 @@ const onSubmit = async (data) => {
         setValue('description', postDetails.description);
         const preview = document.getElementById('image-preview');
         preview.src = postDetails.image;
-        
+        setPost(postDetails);
         // Puedes agregar más campos según sea necesario
       } catch (error) {
         console.error('Error al obtener detalles del post:', error);

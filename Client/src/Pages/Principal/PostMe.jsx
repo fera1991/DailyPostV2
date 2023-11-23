@@ -101,6 +101,10 @@ export default function SavePost() {
         reload();
     }
 
+    const archivePost = (code) => {
+        const newList = array.filter(objet => objet.code !== code);
+        setArray(newList);
+    }
 
 
     return (
@@ -111,7 +115,7 @@ export default function SavePost() {
 
                 <div className='mt-20'>
                     {array.map((data) => {
-                        return <PostCard post={data} listSaved={arrayFavorite} userLogin={user} />;
+                        return <PostCard post={data} listSaved={arrayFavorite} userLogin={user} archivePost={archivePost}/>;
                     })}
                 </div>
 
