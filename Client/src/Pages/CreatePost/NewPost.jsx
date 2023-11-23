@@ -7,11 +7,11 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { uploadFile} from '../../firebase/config'
+import Swal from 'sweetalert2'
 
 export default function NewPost() {
-
+const navigate = useNavigate();
 const context = useAPIContext(); 
-
 const {
   register,
   handleSubmit,
@@ -38,11 +38,23 @@ const onSubmit = async (data) => {
     console.log(url);
     const info = await context.create(data.title,data.description,url);
     if (info) {
-      console.log("Creacion completado")
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Publicacion creada",
+        showConfirmButton: false,
+        timer: 1500
+      });
       navigate("/home")
     }
     else {
       console.log("Creacion fallido")
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Algo salió mal!",
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
     }
 
   } catch (error) {

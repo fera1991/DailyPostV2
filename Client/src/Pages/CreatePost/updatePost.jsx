@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate ,useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { uploadFile} from '../../firebase/config'
+import Swal from 'sweetalert2';
 
 export default function UpdatePost() {
 
@@ -42,10 +43,22 @@ const onSubmit = async (data) => {
     }
     const info = await context.update(data.title,data.description,url,post.code);
     if (info) {
-      console.log("Creacion completado")
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Publicacion actualizada",
+        showConfirmButton: false,
+        timer: 1500
+      });
       navigate("/home")
     }
     else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Algo salió mal!",
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
       console.log("Creacion fallido")
     }
 

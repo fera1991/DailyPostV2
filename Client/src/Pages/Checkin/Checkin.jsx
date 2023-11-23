@@ -6,6 +6,7 @@ import { faKey, faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAPIContext } from "../../Context/Context";
+import Swal from 'sweetalert2';
 
 // ... (importaciones y código previo)
 
@@ -28,9 +29,22 @@ export default function Checkin() {
         const result = context.register(username, email, password)
 
         if( result ){
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Registro completado",
+                showConfirmButton: false,
+                timer: 1500
+              });
             navigate('/');
         }
         else{
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Algo salió mal!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+              });
             console.log("error");
         }
         

@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
 import DailyPost_logo from '../../assets/img/DailyPost_logo.png';
 import { useState } from "react";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAPIContext } from '../../Context/Context';
 import UserList from '../UserList';
-
+import Swal from 'sweetalert2';
 
 
 export default function MenuAdmin({ props = () => { }, func = () => { }, owned = () => { }, favorite = () => { }, reload = () => { } }) {
     const context = useAPIContext();
     const [add, setAdd] = useState(false);
     const [bar, setBar] = useState(false);
-    const [post, setPost] = useState('')
+    const [post, setPost] = useState('');
+    const navigate = useNavigate();
+
 
     //Busqueda de usuario --->
     const onSearch = () => {
@@ -31,8 +33,27 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
     //Busqueda de usuario <---
 
     const logoutFuntion = () => {
-        context.logout();
-        navigate("/");
+
+        Swal.fire({
+            title: "Estas seguro?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                Swal.fire({
+                    title: "Sesion cerrada!",
+                    icon: "success"
+                });
+                context.logout();
+                navigate("/");
+            }
+
+        });
+
     }
 
     const location = useLocation();
@@ -110,17 +131,15 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                             Crear Post
                         </button>
                     </Link>
-                    <Link to="/">
-                        <button
-                            type="button"
-                            className="text-black bg-purple-50 focus:ring-4 focus:outline-none focus:ring-purple-50 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-50 dark:hover:bg-purple-100 dark:focus:ring-purple-100 border"
-                            onClick={() => {
-                                logoutFuntion();
-                            }}
-                        >
-                            Cerrar sesión
-                        </button>
-                    </Link>
+                    <button
+                        type="button"
+                        className="text-black bg-purple-50 focus:ring-4 focus:outline-none focus:ring-purple-50 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-50 dark:hover:bg-purple-100 dark:focus:ring-purple-100 border"
+                        onClick={() => {
+                            logoutFuntion();
+                        }}
+                    >
+                        Cerrar sesión
+                    </button>
                 </div>
                 <div className="items-center justify-between w-full md:flex md:w-auto md:order-1">
                     <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
@@ -129,8 +148,8 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                                 <a
                                     href="#"
                                     className={` ${Home
-                                            ? 'text-xl block py-2 px-3 text-black bg-purple-100 rounded md:bg-transparent md:text-purple-50 md:p-0 md:dark:text-black'
-                                            : 'text-xl block py-2 px-3 text-black rounded hover:bg-black md:hover:bg-transparent md:hover:text-black md:p-0 md:dark:hover:text-black dark:text-purple-300 dark:hover:bg-black dark:hover:text-white md:dark:hover:bg-transparent dark:border-black'
+                                        ? 'text-xl block py-2 px-3 text-black bg-purple-100 rounded md:bg-transparent md:text-purple-50 md:p-0 md:dark:text-black'
+                                        : 'text-xl block py-2 px-3 text-black rounded hover:bg-black md:hover:bg-transparent md:hover:text-black md:p-0 md:dark:hover:text-black dark:text-purple-300 dark:hover:bg-black dark:hover:text-white md:dark:hover:bg-transparent dark:border-black'
                                         }`}
                                 >
                                     <svg
@@ -156,8 +175,8 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                                 <a
                                     href="#"
                                     className={` ${Save
-                                            ? 'text-xl block py-2 px-3 text-black bg-purple-100 rounded md:bg-transparent md:text-purple-50 md:p-0 md:dark:text-black'
-                                            : 'text-xl block py-2 px-3 text-black rounded hover:bg-black md:hover:bg-transparent md:hover:text-black md:p-0 md:dark:hover:text-black dark:text-purple-300 dark:hover:bg-black dark:hover:text-white md:dark:hover:bg-transparent dark:border-black'
+                                        ? 'text-xl block py-2 px-3 text-black bg-purple-100 rounded md:bg-transparent md:text-purple-50 md:p-0 md:dark:text-black'
+                                        : 'text-xl block py-2 px-3 text-black rounded hover:bg-black md:hover:bg-transparent md:hover:text-black md:p-0 md:dark:hover:text-black dark:text-purple-300 dark:hover:bg-black dark:hover:text-white md:dark:hover:bg-transparent dark:border-black'
                                         }`}
                                 >
                                     <svg
@@ -182,8 +201,8 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                                 <a
                                     href="#"
                                     className={` ${PostMe
-                                            ? 'text-xl block py-2 px-3 text-black bg-purple-100 rounded md:bg-transparent md:text-purple-50 md:p-0 md:dark:text-black'
-                                            : 'text-xl block py-2 px-3 text-black rounded hover:bg-black md:hover:bg-transparent md:hover:text-black md:p-0 md:dark:hover:text-black dark:text-purple-300 dark:hover:bg-black dark:hover:text-white md:dark:hover:bg-transparent dark:border-black'
+                                        ? 'text-xl block py-2 px-3 text-black bg-purple-100 rounded md:bg-transparent md:text-purple-50 md:p-0 md:dark:text-black'
+                                        : 'text-xl block py-2 px-3 text-black rounded hover:bg-black md:hover:bg-transparent md:hover:text-black md:p-0 md:dark:hover:text-black dark:text-purple-300 dark:hover:bg-black dark:hover:text-white md:dark:hover:bg-transparent dark:border-black'
                                         }`}
                                 >
                                     <svg
@@ -219,7 +238,6 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                                     onBlur={handleBlur}
                                 />
                                 <label
-                                    htmlFor="exampleSearch2"
                                     className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-black dark:peer-focus:text-primary"
                                 >
                                     Buscar usuario...

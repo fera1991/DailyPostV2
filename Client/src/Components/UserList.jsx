@@ -9,6 +9,7 @@ const UserList = ({ users, onItemClick, onClose }) => {
   return (
     <div className="absolute top-full left-0 w-full bg-white border border-gray-200 rounded-lg shadow-md mt-2">
       <ul>
+
         {users.map((user) => (
           <li
             key={user.id}
@@ -17,6 +18,7 @@ const UserList = ({ users, onItemClick, onClose }) => {
           >
             {user.username}
           </li>
+          
         ))}
       </ul>
     </div>

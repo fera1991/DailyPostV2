@@ -6,6 +6,7 @@ import { useAPIContext } from "../../Context/Context";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Swal from 'sweetalert2'
 
 export default function Login() {
 
@@ -25,6 +26,12 @@ export default function Login() {
       navigate("/home")
     }
     else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Algo salió mal!",
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
       console.log("loggeo fallido")
       setError(true);
     }

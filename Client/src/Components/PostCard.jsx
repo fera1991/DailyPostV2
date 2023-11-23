@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAPIContext } from "../Context/Context";
+import Swal from 'sweetalert2'
 
 const PostCard = ({ post, listSaved, userLogin , archivePost }) => {
   const [likes, setLikes] = useState(0);
@@ -52,16 +53,39 @@ const PostCard = ({ post, listSaved, userLogin , archivePost }) => {
     }
   };
 
-  const handleEliminarClick = async () => {
-    const response = await context.toggle(post.code);
+
+const Archive = async() => {
+  const response = await context.toggle(post.code);
     console.log(response);
     toggleOptions();
-    if(response.message !== "Post active"){
+    if(response){
+      if(response.message !== "Post active"){
       archivePost(post.code);
+      
+     }
     }
+}
+
+  const handleArchiveClick = async () => {
+    
+    Swal.fire({
+      title: "Estas seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si!"
+    }).then((result) =>  {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Archivado!",
+          icon: "success"
+        });
+      }
+      Archive();
+    });
   }
-
-
 
 
   const PrimaryCard = () => (
@@ -90,8 +114,8 @@ const PostCard = ({ post, listSaved, userLogin , archivePost }) => {
                   <Link to={`/updatePost/${post.code}`}>Editar</Link>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                   onClick={handleEliminarClick}
-                  >Eliminar</li>
+                   onClick={handleArchiveClick}
+                  >Archivar</li>
                 </ul>
               </div>
             )}
