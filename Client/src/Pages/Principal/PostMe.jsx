@@ -90,7 +90,11 @@ export default function SavePost() {
         console.log(pageBool());
         if (pageBool()) {
             console.log("ejecutandose 2");
-            const data = await context.getAll(num + 1);
+            const data = await context.getAllOwn(num + 1);
+            const response = await context.getAllFavoriteEntirety();
+            if (response) {
+                setArrayFavorite(response);
+            }
             if(data){
             console.log("ejecutandose 3");
             setNum(num + 1);
