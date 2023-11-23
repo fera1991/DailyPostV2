@@ -26,4 +26,11 @@
   }
   
   
+  @media screen and (max-width: 1000px) {
+    .post-card {
+      width: 100%;    /* Ajusta el ancho al 100% del contenedor padre */
+      max-width: none; /* Elimina cualquier restricción de ancho máximo */
+      padding: 20px;    /* Ajusta el relleno si es necesario */
+    }
+  }
   
