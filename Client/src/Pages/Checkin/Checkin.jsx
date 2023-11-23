@@ -26,24 +26,43 @@ export default function Checkin() {
             return;
         }
         
-        const result = context.register(username, email, password)
-
+        const result = await context.register(username, email, password)
+        console.log(result)
         if( result ){
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Registro completado",
-                showConfirmButton: false,
-                timer: 1500
-              });
-            navigate('/');
+            if(result.status === 201){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Registro completado",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                navigate('/');
+            }
+            if(result.status === 409){
+                if(result.data.message === "Email already exists"){
+                    Swal.fire({
+                        icon: "error",
+                        title: "El correo ya existe",
+                        text: "Algo salió mal!",
+                      });
+                    console.log("error");
+                }
+                if(result.data.message === "Username already exists"){
+                    Swal.fire({
+                        icon: "error",
+                        title: "EL nombre de usuario ya existe",
+                        text: "Algo salió mal!",
+                      });
+                    console.log("error");
+                }
+            }
         }
         else{
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Algo salió mal!",
-                footer: '<a href="#">Why do I have this issue?</a>'
               });
             console.log("error");
         }

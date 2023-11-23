@@ -46,8 +46,8 @@ export const Auth = {
             }
 
         } catch (error) {
-            console.log(error);
-            return undefined;
+            console.log(error.response);
+            return error.response;
         }
     },
 

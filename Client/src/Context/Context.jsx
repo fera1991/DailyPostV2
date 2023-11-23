@@ -74,12 +74,13 @@ export const APIProvider = (prop) => {
             const data = await Auth.register(username,email,password);
             console.log(data);
             if(data){
-                return true;
+                return data;
             }
             return false;
 
         } catch (error) {
-            return false;
+            console.log(error)
+            return error;
         }
       }
       const update = async (title,description,image,id)=>{
