@@ -134,12 +134,18 @@ return (
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="title"
                   type="text"
-                  {...register('title', { required: true })}
+                  {...register('title', { required: true, minLength: 5, maxLength: 20 })}
                 />
                 {errors.title && (
                   <p className="text-red-500 text-xs italic">
-                    Este campo es requerido.
-                  </p>
+                  {errors.title.type === 'required'
+                    ? 'Este campo es requerido.'
+                    : ''}
+                  {errors.title.type === 'minLength' &&
+                    'La longitud mínima es de 5 caracteres.'}
+                  {errors.title.type === 'maxLength' &&
+                    'La longitud máxima es de 20 caracteres.'}
+                </p>
                 )}
               </div>
             </div>
@@ -154,12 +160,18 @@ return (
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="description"
                 rows="5"
-                {...register('description', { required: true })}
+                {...register('description', { required: true, minLength: 5, maxLength: 200 })}
               ></textarea>
               {errors.description && (
                 <p className="text-red-500 text-xs italic">
-                  Este campo es requerido.
-                </p>
+                {errors.description.type === 'required'
+                  ? 'Este campo es requerido.'
+                  : ''}
+                {errors.description.type === 'minLength' &&
+                  'La longitud mínima es de 5 caracteres.'}
+                {errors.description.type === 'maxLength' &&
+                  'La longitud máxima es de 200 caracteres.'}
+              </p>
               )}
             </div>
           </div>
