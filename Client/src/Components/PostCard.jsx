@@ -53,10 +53,12 @@ const PostCard = ({ post, listSaved, userLogin }) => {
   };
 
 
+
+
   const PrimaryCard = () => (
     <div className="container mx-auto px-20 post-card flex justify-center items-center">
-      <div className="flex items-center justify-center p-7 px-6" style={{ width: '90%', height: '90%', maxWidth: '600px', minHeight: '300px' }}> {/* Ajustado aquí */}
-        <div className="bg-gray-100 text-black rounded-md shadow-md sm:w-full" style={{ width: '100%', height: '100%' }}>
+      <div className="flex items-center justify-center p-7 px-6" style={{ width: '90%', height: '90%', maxWidth: '600px', minHeight: '300px' }}>
+        <div className="bg-gray-100 text-black rounded-md shadow-md sm:w-full" style={{ width: '90%', height: '80%' }}>
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center space-x-2">
               <div className="-space-y-1">
@@ -71,7 +73,7 @@ const PostCard = ({ post, listSaved, userLogin }) => {
 
             </button>
             {showOptions && (
-              <div className="absolute bg-white rounded shadow-md mt-7" style={{ marginLeft: '460px' }}>
+              <div className="absolute bg-white rounded shadow-md mt-7" style={{ marginLeft: '300px' }}>
                 <ul>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Editar</li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Eliminar</li>
@@ -80,9 +82,12 @@ const PostCard = ({ post, listSaved, userLogin }) => {
             )}
           </div>
           <img src={post.image} alt="" className="bg-coolGray-500 w-full object-cover object-center" style={{
-            maxHeight: '50%', // Ajustado para utilizar el 100% de la altura del contenedor
-            objectFit: 'cover',
+            width: '100%',
+            height: '60%',
+            objectFit: 'cover', // o 'contain', según prefieras
+            maxHeight: '50%'
           }} />
+
           <div className="p-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -158,7 +163,7 @@ const PostCard = ({ post, listSaved, userLogin }) => {
     return (
       <div className=" text-black post-card">
         <div className="container relative mx-auto min-h-48 flex items-center justify-center p-10 px-6" style={{ padding: '20px' }}>
-          <button onClick={() => setShowPrimaryCard(true)} className="absolute top-7 right-[-20px] mt-2 mr-2 text-xl font-bold text-black hover:text-red-500" title="close post">
+          <button onClick={() => setShowPrimaryCard(true)} className="absolute top-5 right-[-20px] mt-2 mr-2 text-xl font-bold text-black hover:text-red-500" title="close post">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
