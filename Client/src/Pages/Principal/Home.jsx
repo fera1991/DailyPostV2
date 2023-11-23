@@ -1,16 +1,8 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faHeart, faComment, faBookmark } from '@fortawesome/free-solid-svg-icons';
-import Comments from '../../Components/Comments';
-import NewComment from '../../Components/NewComments';
-import OptionsPots from '../../Components/AdminComponents/OptionsPostAdmin';
 import MenuAdmin from '../../Components/AdminComponents/MenuAdmin';
 import PostCard from '../../Components/PostCard';
-
-import PostIcons from '../../Components/PostIcons';
 import { useState, useEffect } from "react";
 import { useAPIContext } from "../../Context/Context";
-import Pagination from '../../Components/Pagination';
 // import { render } from '@testing-library/react';
 // import { set } from 'react-hook-form';
 
@@ -21,7 +13,7 @@ export default function Post() {
     const [userOptions, setUserOptions] = useState(false);
     const context = useAPIContext();
     const [array, setArray] = useState([]);
-    const [arrayFavorite,setArrayFavorite] = useState([]);
+    const [arrayFavorite, setArrayFavorite] = useState([]);
     const [num, setNum] = useState(0);
     const [maxpages, setmaxpages] = useState(0);
     const [user, setUser] = useState(null);
@@ -56,7 +48,7 @@ export default function Post() {
     const allData = async () => {
         const data = await context.getAll(num);
         const response = await context.getAllFavoriteEntirety();
-        if(response){
+        if (response) {
             setArrayFavorite(response);
         }
         //const pages = data.pages;
@@ -116,7 +108,7 @@ export default function Post() {
                         // Realiza la comprobación fuera del bloque JSX
                         if (data.archived === false) {
                             // Renderiza el componente solo si la condición se cumple
-                            return <PostCard post={data} listSaved={arrayFavorite} userLogin={user}/>;
+                            return <PostCard post={data} listSaved={arrayFavorite} userLogin={user} />;
                         } else {
                             // Si no se cumple la condición, puedes decidir hacer algo más o simplemente no renderizar nada
                             return null;

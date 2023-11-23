@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserList = ({ users, onItemClick, onClose}) => {
+const UserList = ({ users, onItemClick, onClose }) => {
   const handleClick = (username) => {
     onItemClick(username);
     onClose();

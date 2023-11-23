@@ -5,9 +5,9 @@ import PrincipalAdmin from './Pages/Principal/Home';
 import {BrowserRouter, Route,Routes} from 'react-router-dom';
 import Private from './Components/Private/Private';
 import NewPost from './Pages/CreatePost/NewPost';
-import PostCard from './Components/PostCard';
+
 import SavePost from './Pages/Principal/SavePost';
-import PostWithComments from './Components/PostWithComments';
+
 import PostMe from './Pages/Principal/PostMe';
 const App = () => (
   
@@ -19,7 +19,6 @@ const App = () => (
       <Route path ="/home" element={ <PrincipalAdmin/> }/>
       <Route path="/404" element={<Private/>}/>
       <Route path="/savePost" element={<SavePost/>}/>
-      <Route path="/coment" element={<PostWithComments/>}/>
       <Route path="/postMe" element={<PostMe/>}/>
     </Routes>
   </BrowserRouter>

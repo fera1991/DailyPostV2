@@ -81,7 +81,8 @@ const PostCard = ({ post, listSaved, userLogin }) => {
           </div>
           <img src={post.image} alt="" className="bg-coolGray-500 w-full object-cover object-center" style={{
             maxHeight: '50%', // Ajustado para utilizar el 100% de la altura del contenedor
-            objectFit: 'cover', }} />
+            objectFit: 'cover',
+          }} />
           <div className="p-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
