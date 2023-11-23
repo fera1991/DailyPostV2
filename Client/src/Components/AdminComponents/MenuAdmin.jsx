@@ -7,7 +7,7 @@ import UserList from '../UserList';
 import Swal from 'sweetalert2';
 
 
-export default function MenuAdmin({ props = () => { }, func = () => { }, owned = () => { }, favorite = () => { }, reload = () => { } }) {
+export default function MenuAdmin() {
     const context = useAPIContext();
     const [add, setAdd] = useState(false);
     const [bar, setBar] = useState(false);
@@ -144,8 +144,7 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                 <div className="items-center justify-between w-full md:flex md:w-auto md:order-1">
                     <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                         <li>
-                            <Link to="/home">
-                                <a
+                        <Link to="/home"
                                     href="#"
                                     className={` ${Home
                                         ? 'text-xl block py-2 px-3 text-black bg-purple-100 rounded md:bg-transparent md:text-purple-50 md:p-0 md:dark:text-black'
@@ -166,13 +165,11 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                                             d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
                                         />
                                     </svg>
-                                </a>
                             </Link>
                         </li>
 
                         <li>
-                            <Link to="/savePost">
-                                <a
+                                <Link to="/savePost"
                                     href="#"
                                     className={` ${Save
                                         ? 'text-xl block py-2 px-3 text-black bg-purple-100 rounded md:bg-transparent md:text-purple-50 md:p-0 md:dark:text-black'
@@ -193,13 +190,10 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                                             d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
                                         />
                                     </svg>
-                                </a>
-                            </Link>
+                                </Link>
                         </li>
                         <li>
-                            <Link to="/postMe">
-                                <a
-                                    href="#"
+                                <Link to="/postMe"
                                     className={` ${PostMe
                                         ? 'text-xl block py-2 px-3 text-black bg-purple-100 rounded md:bg-transparent md:text-purple-50 md:p-0 md:dark:text-black'
                                         : 'text-xl block py-2 px-3 text-black rounded hover:bg-black md:hover:bg-transparent md:hover:text-black md:p-0 md:dark:hover:text-black dark:text-purple-300 dark:hover:bg-black dark:hover:text-white md:dark:hover:bg-transparent dark:border-black'
@@ -219,8 +213,7 @@ export default function MenuAdmin({ props = () => { }, func = () => { }, owned =
                                             d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
                                         />
                                     </svg>
-                                </a>
-                            </Link>
+                                </Link>
                         </li>
                         <li>
                             <div

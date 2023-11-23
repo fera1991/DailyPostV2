@@ -9,101 +9,89 @@ import { useAPIContext } from "../../Context/Context";
 
 export default function Post() {
 
-    const [Options, setOptions] = useState(false);
-    const [userOptions, setUserOptions] = useState(false);
     const context = useAPIContext();
     const [array, setArray] = useState([]);
     const [arrayFavorite, setArrayFavorite] = useState([]);
     const [num, setNum] = useState(0);
-    const [maxpages, setmaxpages] = useState(0);
+    const [pages, setPages] = useState(0);
     const [user, setUser] = useState(null);
 
-    const search = async (id) => {
-
-        const data = [];
-        const item = await context.getOne(id);
-        if (item) {
-            data.push(item);
-            setArray(data);
-        }
-
-    }
-
-    const sum = () => {
-        if (num < maxpages) {
-            setNum(num + 1);
-        }
-    }
-    const subtraction = () => {
-        if (num > 0) {
-            setNum(num - 1);
-        }
-    }
-    const reload = async () => {
-        const data = await context.getAll(0);
-        setArray(data.data);
-        setNum(0);
-    }
-
     const allData = async () => {
-        const data = await context.getAll(num);
+        const data = await context.getAll(0);
         const response = await context.getAllFavoriteEntirety();
         if (response) {
             setArrayFavorite(response);
         }
         //const pages = data.pages;
-        const user = await context.whoami();
-        setUser(user);
-
-        const reversedArray = [...data.content].reverse();
-        setmaxpages(data.total_pages);
-        setArray(reversedArray)
-    }
-
-    const allFavorite = async () => {
-        const data = await context.getFavorite();
-        const id = data.favorites;
-        const promise = id.map(data => renderFavorite(data))
-        console.log(promise);
-        Promise.all(promise).then(values => {
-            const validate = values.filter(data => { return data != undefined })
-            console.log(validate);
-            setArray(validate);
-        });
-
-    }
-    const renderFavorite = async (id) => {
-        const data = await context.getOne(id);
-        return data;
-
-    }
-
-    useEffect(() => {
-        const username = "";
-        setUserOptions(username);
-        allData();
-    }, [num]);
-
-    const ownedData = async () => {
-        const data = await context.getOwn(num);
-        if (data) {
-            setArray(data);
+        const userData = await context.whoami();
+        console.log("hola");
+        setUser(userData);
+        if(data){
+            setPages(data.total_pages);
+            setArray(data.content);
         }
     }
 
-    const boolFunction = () => {
-        reload();
+
+    useEffect(() => {
+        allData();
+    }, []);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+      
+            // Si la posición de desplazamiento más la altura de la ventana es igual a la altura total del contenido,
+            // entonces estamos en el final de la página.
+            if (scrollTop + clientHeight >= scrollHeight) {
+              console.log('¡Has llegado al final de la página!');
+              addNewPosts();
+              // Aquí puedes ejecutar la lógica que deseas al llegar al final de la página.
+            }
+          };
+      
+          // Agrega el evento de desplazamiento al elemento 'window'
+          window.addEventListener('scroll', handleScroll);
+      
+          // Elimina el evento de desplazamiento al desmontar el componente
+          return () => {
+            window.removeEventListener('scroll', handleScroll);
+          };
+    })
+
+    const pageBool = () => {
+        console.log(pages)
+        return num < pages-1;
     }
+
+    const addNewPosts = async () => {
+        console.log("ejecutandose 1", num, pages);
+        console.log(pageBool());
+        if (pageBool()) {
+            console.log("ejecutandose 2");
+            const data = await context.getAll(num + 1);
+            if(data){
+            console.log("ejecutandose 3");
+            setNum(num + 1);
+            setPages(data.total_pages);
+            const newList = [...array, ...data.content];
+            console.log(newList);
+            setArray(newList);
+            }
+        }
+    }
+
 
     const archivePost = (code) => {
         const newList = array.filter(objet => objet.code !== code);
         setArray(newList);
     }
 
-
     return (
         <>
-            <MenuAdmin props={search} func={reload} owned={ownedData} favorite={allFavorite} reload={boolFunction} />
+            <MenuAdmin />
 
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
 
@@ -112,7 +100,7 @@ export default function Post() {
                         // Realiza la comprobación fuera del bloque JSX
                         if (data.archived === false) {
                             // Renderiza el componente solo si la condición se cumple
-                            return <PostCard post={data} listSaved={arrayFavorite} userLogin={user} archivePost={archivePost}/>;
+                            return <PostCard key={data.code} post={data} listSaved={arrayFavorite} userLogin={user} archivePost={archivePost}/>;
                         } else {
                             // Si no se cumple la condición, puedes decidir hacer algo más o simplemente no renderizar nada
                             return null;
