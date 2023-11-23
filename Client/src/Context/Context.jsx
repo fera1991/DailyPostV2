@@ -87,6 +87,12 @@ export const APIProvider = (prop) => {
         }
       }
 
+      const toggle = async (id)=>{
+        const tokenData = localStorage.getItem("TOKEN");
+        const data = Post.toggle(tokenData,id);
+        return data
+      }
+
       const getAll = async (num)=>{
         const tokenData = localStorage.getItem("TOKEN");
         const data = Post.getAll(tokenData,num);
@@ -171,7 +177,8 @@ export const APIProvider = (prop) => {
             getAllFavoriteEntirety:getAllFavoriteEntirety,
             getAllLikes:getAllLikes,
             comment:comment,
-            saveComment:saveComment
+            saveComment:saveComment,
+            toggle:toggle
         }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite,findOne,savePost,likePost,getAllFavoriteEntirety,comment,saveComment]
     );
     return <APIContext.Provider value={data}>
