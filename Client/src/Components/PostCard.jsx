@@ -90,7 +90,7 @@ const Archive = async() => {
 
   const PrimaryCard = () => (
     <div className="container mx-auto px-20 post-card flex justify-center items-center">
-      <div className="flex items-center justify-center p-7 px-6" style={{ width: '90%', height: '90%', maxWidth: '600px', minHeight: '300px' }}>
+      <div className="flex items-center justify-center p-7 px-6" style={{ width: '90%', height: '90%', maxWidth: '600px',minWidth: '300px', minHeight: '300px' }}>
         <div className={` ${!post.archived
                             ? 'bg-gray-100 text-black rounded-md shadow-md sm:w-full'
                             : 'bg-gray-400 text-black rounded-md shadow-md sm:w-full'
@@ -245,7 +245,7 @@ const Archive = async() => {
                 )}
               </div>
 
-              <div className="flex-1 overflow-y-auto p-2">
+              <div className="flex-1 max-h-[60%] overflow-y-auto p-2">
                 <div className="mb-2">
                   <span className="font-bold">{post.user.username}: </span>{post.description}
                 </div>
