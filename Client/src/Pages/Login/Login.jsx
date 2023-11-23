@@ -38,8 +38,10 @@ export default function Login() {
   }
 
   if (context.token) {
-    console.log("ya existe su loggeo")
-    navigate("/home")
+    const userData = context.whoami();
+    if(userData){
+      navigate("/home")
+    }
   }
 
   const { register, handleSubmit, } = useForm();

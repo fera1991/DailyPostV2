@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAPIContext } from "../Context/Context";
 import Swal from 'sweetalert2'
 
@@ -10,6 +10,7 @@ const PostCard = ({ post, listSaved, userLogin , archivePost }) => {
   const [showPrimaryCard, setShowPrimaryCard] = useState(true);
   const [showOptions, setShowOptions] = useState(false);
   const context = useAPIContext();
+  const navigate = useNavigate();
 
   const searchAndActivate = async () => {
     const result = await context.getAllLikes(post.code);
@@ -70,7 +71,6 @@ const Archive = async() => {
     
     Swal.fire({
       title: "Estas seguro?",
-      text: "¡No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -82,8 +82,8 @@ const Archive = async() => {
           title: "Archivado!",
           icon: "success"
         });
+        Archive();
       }
-      Archive();
     });
   }
 
@@ -114,12 +114,14 @@ const Archive = async() => {
             {showOptions && (
               <div className="absolute bg-white rounded shadow-md mt-7" style={{ marginLeft: '300px' }}>
                 <ul>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <Link to={`/updatePost/${post.code}`}>Editar</Link>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={()=>{navigate(`/updatePost/${post.code}`)}}>
+                  <Link >Editar</Link>  
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                    onClick={handleArchiveClick}
-                  >Archivar</li>
+                  >{ 
+                    post.archived ? "Desarchivar" : "Archivar" 
+                  }</li>
                 </ul>
               </div>
             )}

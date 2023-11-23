@@ -7,7 +7,7 @@ import UserList from '../UserList';
 import Swal from 'sweetalert2';
 
 
-export default function MenuAdmin() {
+export default function MenuAdmin({search}) {
     const context = useAPIContext();
     const [add, setAdd] = useState(false);
     const [bar, setBar] = useState(false);
@@ -16,8 +16,10 @@ export default function MenuAdmin() {
 
 
     //Busqueda de usuario --->
-    const onSearch = () => {
-        console.log(post);
+    const onSearch = async () => {
+        const userList = await context.findAllByUsername(post);
+        console.log(userList);
+        setUserList(userList);
         setShowUserList(true);
     }
 
@@ -94,18 +96,14 @@ export default function MenuAdmin() {
 
     //Busqueda de usuario --->
     const [showUserList, setShowUserList] = useState(false);
-    const [userList, setUserList] = useState([
-        { id: 1, username: 'usuario1' },
-        { id: 2, username: 'usuario2' },
-        { id: 3, username: 'usuario3' },
-        { id: 4, username: 'usuario4' },
-        { id: 5, username: 'usuario5' },
-        // ... Agrega más usuarios según sea necesario
-    ]);
+    const [userList, setUserList] = useState([]);
 
-    const handleUserClick = (username) => {
-        // Aquí puedes realizar alguna acción con el nombre de usuario seleccionado
-        console.log(`Usuario seleccionado: ${username}`);
+    const handleUserClick = async (username) => {
+        const response = await context.findAllPostByUser(username);
+        console.log(response);
+        if(response){
+            search(response);
+        }
     };
 
     const closeUserList = () => {

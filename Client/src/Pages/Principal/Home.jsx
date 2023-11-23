@@ -3,6 +3,7 @@ import MenuAdmin from '../../Components/AdminComponents/MenuAdmin';
 import PostCard from '../../Components/PostCard';
 import { useState, useEffect } from "react";
 import { useAPIContext } from "../../Context/Context";
+import Swal from 'sweetalert2';
 // import { render } from '@testing-library/react';
 // import { set } from 'react-hook-form';
 
@@ -61,6 +62,16 @@ export default function Post() {
           };
     })
 
+    const message = (data) => {
+          Swal.fire({
+            position: "top-end",
+            icon: "info",
+            title: data,
+            showConfirmButton: false,
+            timer: 1500
+          });
+    }
+
     const pageBool = () => {
         console.log(pages)
         return num < pages-1;
@@ -70,6 +81,7 @@ export default function Post() {
         console.log("ejecutandose 1", num, pages);
         console.log(pageBool());
         if (pageBool()) {
+            message("Cargando Nuevos Posts");
             console.log("ejecutandose 2");
             const data = await context.getAll(num + 1);
             const response = await context.getAllFavoriteEntirety();
@@ -85,6 +97,9 @@ export default function Post() {
             setArray(newList);
             }
         }
+        else{
+            //message("No hay mas posts")
+        }
     }
 
 
@@ -93,9 +108,14 @@ export default function Post() {
         setArray(newList);
     }
 
+    const search = (list) => {
+        setArray(list.content);
+        setPages(list.total_pages);
+    }
+
     return (
         <>
-            <MenuAdmin />
+            <MenuAdmin search={search}/>
 
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
 

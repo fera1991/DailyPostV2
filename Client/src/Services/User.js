@@ -2,7 +2,7 @@ import axios from "axios";
 
 const URL = "https://dailypost-api.onrender.com/user";
 
-export const Auth = {
+export const User = {
     findAllByUsername: async (token, fragment) => {
         try {
             const data = await axios.get(`${URL}/username?fragment=${fragment}`,

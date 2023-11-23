@@ -2,6 +2,7 @@ import react from "react";
 import { useMemo,useEffect,useState,createContext} from "react";
 import { Auth } from "../Services/Auth";
 import { Post } from "../Services/Post";
+import { User } from "../Services/User"
 import { Result } from "postcss";
 
 const APIContext = createContext();
@@ -56,6 +57,16 @@ export const APIProvider = (prop) => {
             console.log(error);
             return false;
         }
+      }
+
+      const findAllByUsername = async (fragment) => {
+        const response = User.findAllByUsername(token,fragment);
+        return response;
+      }
+
+      const findAllPostByUser = async (id) => {
+        const response = User.findAllPostByUser(token,id);
+        return response;
       }
 
       const register = async (username, email, password)=>{
@@ -192,8 +203,10 @@ export const APIProvider = (prop) => {
             comment:comment,
             saveComment:saveComment,
             toggle:toggle,
-            update:update
-        }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite,findOne,savePost,likePost,getAllFavoriteEntirety,comment,saveComment]
+            update:update,
+            findAllByUsername:findAllByUsername,
+            findAllPostByUser:findAllPostByUser
+        }),[token,username,login,logout,getAll,create,getToken,getAllOwn,getAllFavorite,findOne,savePost,likePost,getAllFavoriteEntirety,comment,saveComment,findAllByUsername,findAllPostByUser]
     );
     return <APIContext.Provider value={data}>
             {prop.children}

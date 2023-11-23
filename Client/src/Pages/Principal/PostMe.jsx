@@ -3,6 +3,7 @@ import MenuAdmin from '../../Components/AdminComponents/MenuAdmin';
 import PostCard from '../../Components/PostCard';
 import { useState, useEffect } from "react";
 import { useAPIContext } from "../../Context/Context";
+import Swal from 'sweetalert2';
 
 // import { render } from '@testing-library/react';
 // import { set } from 'react-hook-form';
@@ -16,21 +17,9 @@ export default function SavePost() {
     const [array, setArray] = useState([]);
     const [arrayFavorite, setArrayFavorite] = useState([]);
     const [num, setNum] = useState(0);
-    const [maxpages, setmaxpages] = useState(0);
+    const [pages, setPages] = useState(0);
     const [user, setUser] = useState(null);
-
-    const sum = () => {
-        if (num < maxpages) {
-            setNum(num + 1);
-            console.log(num);
-        }
-    }
-    const subtraction = () => {
-        if (num > 0) {
-            setNum(num - 1);
-            console.log(num);
-        }
-    }
+    
     const reload = async () => {
         const data = await context.getAllOwn(0);
         setArray(data.data);
@@ -46,7 +35,7 @@ export default function SavePost() {
         }
         const userData = await context.whoami();
         setUser(userData);
-        setmaxpages(data.total_pages);
+        setPages(data.total_pages);
         setArray(data.content)
     }
 
@@ -80,6 +69,16 @@ export default function SavePost() {
           };
     })
 
+    const message = (data) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "info",
+          title: data,
+          showConfirmButton: false,
+          timer: 1500
+        });
+  }
+
     const pageBool = () => {
         console.log(pages)
         return num < pages-1;
@@ -89,6 +88,7 @@ export default function SavePost() {
         console.log("ejecutandose 1", num, pages);
         console.log(pageBool());
         if (pageBool()) {
+            message("Cargando Nuevos Posts");
             console.log("ejecutandose 2");
             const data = await context.getAllOwn(num + 1);
             const response = await context.getAllFavoriteEntirety();
@@ -104,6 +104,9 @@ export default function SavePost() {
             setArray(newList);
             }
         }
+        else{
+            //message("No hay mas posts")
+        }
     }
 
 
@@ -113,9 +116,10 @@ export default function SavePost() {
     }
 
 
+
     return (
         <>
-            <MenuAdmin/>
+            <MenuAdmin />
 
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
 
