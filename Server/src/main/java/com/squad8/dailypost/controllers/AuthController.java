@@ -107,6 +107,13 @@ public class AuthController {
 	                new MessageDTO("Email already exists"), HttpStatus.CONFLICT);
 		}
 		
+		User responseUsername = userService.findOneByIdentifier(info.getUsername());
+		if(responseUsername != null) {
+			return new ResponseEntity<>(
+	                new MessageDTO("Username already exists"), HttpStatus.CONFLICT);
+		}
+		
+		
 		try { 
 			userService.save(info);
 			return new ResponseEntity<>(
