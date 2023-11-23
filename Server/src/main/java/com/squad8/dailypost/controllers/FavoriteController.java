@@ -1,5 +1,8 @@
 package com.squad8.dailypost.controllers;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -93,7 +96,9 @@ public class FavoriteController {
 		String token = tokenHeader.substring(7);
 		
 		User user = userService.findOneByIdentifier(jwtTools.getUsernameFrom(token));
-		Page<Favorite> posts = favoriteService.getPaginatedList(user.getFavorites(), page, size);
+		List<Favorite> favoritePosts = user.getFavorites();
+		Collections.reverse(favoritePosts);
+		Page<Favorite> posts = favoriteService.getPaginatedList(favoritePosts, page, size);
 		return new ResponseEntity<>(new PageDTO<>(
 				posts.getContent(),
 				posts.getNumber(),

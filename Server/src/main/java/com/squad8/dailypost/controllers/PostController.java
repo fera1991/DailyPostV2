@@ -1,5 +1,9 @@
 package com.squad8.dailypost.controllers;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -142,13 +146,18 @@ public class PostController {
 	
 	@GetMapping("/all")
 	public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size){
-		Page<Post> posts = postService.findAll(page, size);
+		List<Post> posts = postService.findAll();
+		List<Post> nonArchivedPosts = posts.stream()
+                .filter(post -> !post.isArchived())
+                .collect(Collectors.toList());
+		Collections.reverse(nonArchivedPosts);
+		Page<Post> newPosts = postService.getPaginatedList(nonArchivedPosts, page, size);
 		return new ResponseEntity<>(new PageDTO<>(
-				posts.getContent(),
-				posts.getNumber(),
-				posts.getSize(),
-				posts.getTotalElements(),
-				posts.getTotalPages()
+				newPosts.getContent(),
+				newPosts.getNumber(),
+				newPosts.getSize(),
+				newPosts.getTotalElements(),
+				newPosts.getTotalPages()
 				)
 				,HttpStatus.OK);
 	}
@@ -159,7 +168,9 @@ public class PostController {
 		String token = tokenHeader.substring(7);
 		
 		User user = userService.findOneByIdentifier(jwtTools.getUsernameFrom(token));
-		Page<Post> posts = postService.getPaginatedList(user.getPosts(), page, size);
+		List<Post> userPosts = user.getPosts();
+		Collections.reverse(userPosts);
+		Page<Post> posts = postService.getPaginatedList(userPosts, page, size);
 		return new ResponseEntity<>(new PageDTO<>(
 				posts.getContent(),
 				posts.getNumber(),
