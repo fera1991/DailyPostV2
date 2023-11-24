@@ -42,7 +42,7 @@ export const Auth = {
               console.log(data);
             if(data.status === 201)
             {
-                return data.data
+                return data
             }
 
         } catch (error) {
