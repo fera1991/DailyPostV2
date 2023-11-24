@@ -113,7 +113,7 @@ export default function Post() {
 
                 <div className='mt-20'>
                     {array.map((data) => {
-                        // Realiza la comprobación fuera del bloque JSX
+                        // Realiza la comprobación fuera sdel bloque JSX
                         if (data.archived === false) {
                             // Renderiza el componente solo si la condición se cumple
                             return <PostCard key={data.code} post={data} listSaved={arrayFavorite} userLogin={user} archivePost={archivePost}/>;
