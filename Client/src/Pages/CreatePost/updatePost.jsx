@@ -43,13 +43,7 @@ const onSubmit = async (data) => {
     }
     const info = await context.update(data.title,data.description,url,post.code);
     if (info) {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Publicacion actualizada",
-        showConfirmButton: false,
-        timer: 1500
-      });
+      Swal.fire("Publicación actualizada!");
       navigate("/home")
     }
     else {
