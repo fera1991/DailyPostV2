@@ -38,13 +38,7 @@ const onSubmit = async (data) => {
     console.log(url);
     const info = await context.create(data.title,data.description,url);
     if (info) {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Publicacion creada",
-        showConfirmButton: false,
-        timer: 1500
-      });
+      Swal.fire("Publicación creada!");
       navigate("/home")
     }
     else {
