@@ -99,10 +99,10 @@ export default function Checkin() {
                             render={({ field, fieldState }) => (
                                 <>
                                     <div className="flex-row items-center">
-                                        <FontAwesomeIcon className="w-5 h-5 mr-2 mt-3" icon={faUser} />
+                                        <FontAwesomeIcon className="w-5 h-5 mr-2 mt-3 text-gray-600" icon={faUser} />
                                         <input
                                             {...field}
-                                            className={`font-sans bg-gray-100 border h-12 w-5/6 py-2 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm ${fieldState.invalid ? 'border-red-500' : ''}`}
+                                            className={`bg-gray-100 border flex-1  h-12 w-5/6 py-2 mt-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300" ${fieldState.invalid ? 'border-red-500' : ''}`}
                                             type="text"
                                             placeholder="Nombre de usuario"
                                         />
@@ -131,10 +131,10 @@ export default function Checkin() {
                             render={({ field, fieldState }) => (
                                 <>
                                     <div className="flex-row items-center">
-                                        <FontAwesomeIcon className="w-5 h-5 mr-2 mt-3" icon={faEnvelope} />
+                                        <FontAwesomeIcon className="w-5 h-5 mr-2 mt-3 text-gray-600" icon={faEnvelope} />
                                         <input
                                             {...field}
-                                            className={`font-sans bg-gray-100 border h-12 w-5/6 py-2 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm ${fieldState.invalid ? 'border-red-500' : ''}`}
+                                            className={`bg-gray-100 border flex-1  h-12 w-5/6 py-2 mt-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300"${fieldState.invalid ? 'border-red-500' : ''}`}
                                             type="text"
                                             placeholder="Correo electrónico"
                                         />
@@ -163,10 +163,10 @@ export default function Checkin() {
                             render={({ field, fieldState }) => (
                                 <>
                                     <div className="flex-row items-center">
-                                        <FontAwesomeIcon className="w-5 h-5 mr-2 mt-5" icon={faKey} />
+                                        <FontAwesomeIcon className="w-5 h-5 mr-2 mt-5 text-gray-600" icon={faKey} />
                                         <input
                                             {...field}
-                                            className={`font-sans bg-gray-100 border h-12 w-5/6 py-2 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm ${fieldState.invalid ? 'border-red-500' : ''}`}
+                                            className={`font-sans bg-gray-100 border flex-1  h-12 w-5/6 py-2 mt-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300" ${fieldState.invalid ? 'border-red-500' : ''}`}
                                             type="password"
                                             placeholder="Contraseña"
                                         />
@@ -191,10 +191,10 @@ export default function Checkin() {
                             render={({ field, fieldState }) => (
                                 <>
                                     <div className="flex-row items-center">
-                                        <FontAwesomeIcon className="w-5 h-5 mr-2 mt-5" icon={faKey} />
+                                        <FontAwesomeIcon className="w-5 h-5 mr-2 mt-5 text-gray-600" icon={faKey} />
                                         <input
                                             {...field}
-                                            className={`font-sans bg-gray-100 border h-12 w-5/6 py-2 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-sm ${fieldState.invalid ? 'border-red-500' : ''}`}
+                                            className={`font-sans bg-gray-100 border flex-1  h-12 w-5/6 py-2 mt-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300" ${fieldState.invalid ? 'border-red-500' : ''}`}
                                             type="password"
                                             placeholder="Confirmar contraseña"
                                         />
