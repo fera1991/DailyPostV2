@@ -25,7 +25,6 @@ export default function Post() {
         }
         //const pages = data.pages;
         const userData = await context.whoami();
-        console.log("hola");
         setUser(userData);
         if(data){
             setPages(data.total_pages);
@@ -73,28 +72,23 @@ export default function Post() {
     }
 
     const pageBool = () => {
-        console.log(pages)
         return num < pages-1;
     }
 
     const addNewPosts = async () => {
-        console.log("ejecutandose 1", num, pages);
-        console.log(pageBool());
         if (pageBool()) {
             message("Cargando Nuevos Posts");
-            console.log("ejecutandose 2");
             const data = await context.getAll(num + 1);
             const response = await context.getAllFavoriteEntirety();
             if (response) {
                 setArrayFavorite(response);
             }
             if(data){
-            console.log("ejecutandose 3");
-            setNum(num + 1);
-            setPages(data.total_pages);
-            const newList = [...array, ...data.content];
-            console.log(newList);
-            setArray(newList);
+                setNum(num + 1);
+                setPages(data.total_pages);
+                const newList = [...array, ...data.content];
+                console.log(newList);
+                setArray(newList);
             }
         }
         else{

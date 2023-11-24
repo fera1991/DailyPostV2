@@ -67,7 +67,6 @@ export default function SavePost() {
     })
 
     const pageBool = () => {
-        console.log(pages)
         return num < pages-1;
     }
 
@@ -84,16 +83,12 @@ export default function SavePost() {
     const addNewPosts = async () => {
         if (pageBool()) {
             message("Cargando Nuevos Posts");
-            console.log("ejecutandose 2");
             const data = await context.getAllFavorite(num + 1);
-            console.log(data.content);
             const response = await context.getAllFavoriteEntirety();
-            console.log(response);
             if (response) {
                 setArrayFavorite(response);
             }
             if(data){
-            console.log("ejecutandose 3");
             setNum(num + 1);
             setPages(data.total_pages);
             const newList = [...array, ...data.content];
@@ -120,7 +115,6 @@ export default function SavePost() {
                 <div className='mt-20'>
                     {array.map((data) => {
                         // Realiza la comprobación fuera del bloque JSX
-                        console.log(data.post)
                         if (data.post.archived === false) {
                             // Renderiza el componente solo si la condición se cumple
                             return <PostCard key={data.code} post={data.post} listSaved={arrayFavorite} userLogin={user} archivePost={archivePost} />;
