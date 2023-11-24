@@ -89,8 +89,8 @@ const Archive = async() => {
 
 
   const PrimaryCard = () => (
-    <div className="container mx-auto px-20 post-card flex justify-center items-center">
-      <div className="flex items-center justify-center p-7 px-6" style={{ width: '90%', height: '90%', maxWidth: '600px',minWidth: '300px', minHeight: '300px' }}>
+    <div className="container mx-auto px-5 post-card flex justify-center items-center">
+      <div className="flex items-center justify-center  px-6" style={{ width: '90%', height: '90%', maxWidth: '600px',minWidth: '300px', minHeight: '300px' }}>
         <div className={` ${!post.archived
                             ? 'bg-gray-100 text-black rounded-md shadow-md sm:w-full'
                             : 'bg-gray-400 text-black rounded-md shadow-md sm:w-full'
@@ -207,7 +207,7 @@ const Archive = async() => {
 
     return (
       <div className=" text-black post-card">
-        <div className="container relative mx-auto min-h-48 flex items-center justify-center p-10 px-6" style={{ padding: '20px' }}>
+        <div className="container relative mx-auto min-h-48 flex items-center justify-center p-5 px-6" style={{ padding: '20px' }}>
           <button onClick={() => setShowPrimaryCard(true)} className="absolute top-5 right-[-20px] mt-2 mr-2 text-xl font-bold text-black hover:text-red-500" title="close post">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -305,8 +305,8 @@ const Archive = async() => {
   };
 
   return (
-    <div className="container mx-auto px-20">
-      <div className="min-h-48 flex items-center justify-center p-5 px-6">
+    <div className="container mx-auto ">
+      <div className="min-h-48 flex items-center justify-center ">
         {showPrimaryCard ? <PrimaryCard /> : <SecondaryCard />}
       </div>
     </div>
