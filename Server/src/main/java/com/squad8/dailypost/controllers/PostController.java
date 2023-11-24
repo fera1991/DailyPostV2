@@ -1,6 +1,7 @@
 package com.squad8.dailypost.controllers;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -164,7 +165,9 @@ public class PostController {
 		
 		User user = userService.findOneByIdentifier(jwtTools.getUsernameFrom(token));
 		List<Post> userPosts = user.getPosts();
-		Collections.reverse(userPosts);
+		
+		userPosts.sort(Comparator.comparing(Post::getCreatedAt).reversed());
+
 		Page<Post> posts = postService.getPaginatedList(userPosts, page, size);
 		return new ResponseEntity<>(new PageDTO<>(
 				posts.getContent(),

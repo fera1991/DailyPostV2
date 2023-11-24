@@ -1,6 +1,7 @@
 package com.squad8.dailypost.controllers;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,8 @@ public class UserController {
 			return new ResponseEntity<>(new MessageDTO("User Not Found"),HttpStatus.NOT_FOUND);
 		}
 		List<Post> userPosts = user.getPosts();
-		Collections.reverse(userPosts);
+		
+		userPosts.sort(Comparator.comparing(Post::getCreatedAt).reversed());
 		
 		Page<Post> posts = postService.getPaginatedList(userPosts, page, size);
 		return new ResponseEntity<>(new PageDTO<>(
