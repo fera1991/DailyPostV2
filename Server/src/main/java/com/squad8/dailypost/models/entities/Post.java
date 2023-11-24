@@ -1,7 +1,10 @@
 package com.squad8.dailypost.models.entities;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,6 +18,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
 import lombok.ToString;
 
@@ -51,6 +56,11 @@ public class Post {
 	
 	@Column(name = "is_archived")
     private boolean isArchived;
+	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_at", nullable = false, updatable = false)
+	private Date createdAt;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_user", nullable = true)

@@ -10,4 +10,5 @@ import com.squad8.dailypost.models.entities.Post;
 
 public interface PostRepository extends JpaRepository<Post, UUID> {
 	Page<Post> findByTitleContaining(String fragment, Pageable pageable);
+	Page<Post> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

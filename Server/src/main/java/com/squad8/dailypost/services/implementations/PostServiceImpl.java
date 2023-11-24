@@ -88,4 +88,10 @@ public class PostServiceImpl implements PostService{
 		postRepository.save(updatePost);
 	}
 
+	@Override
+	public Page<Post> getLatestPosts(int page, int size) {
+		Pageable pageable = PageRequest.of(page,size);
+        return postRepository.findAllByOrderByCreatedAtDesc(pageable);
+    }
+
 }

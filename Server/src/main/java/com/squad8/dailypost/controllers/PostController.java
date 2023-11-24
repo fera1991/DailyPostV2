@@ -146,18 +146,13 @@ public class PostController {
 	
 	@GetMapping("/all")
 	public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size){
-		List<Post> posts = postService.findAll();
-		List<Post> nonArchivedPosts = posts.stream()
-                .filter(post -> !post.isArchived())
-                .collect(Collectors.toList());
-		Collections.reverse(nonArchivedPosts);
-		Page<Post> newPosts = postService.getPaginatedList(nonArchivedPosts, page, size);
+		Page<Post> posts = postService.getLatestPosts(page, size);
 		return new ResponseEntity<>(new PageDTO<>(
-				newPosts.getContent(),
-				newPosts.getNumber(),
-				newPosts.getSize(),
-				newPosts.getTotalElements(),
-				newPosts.getTotalPages()
+				posts.getContent(),
+				posts.getNumber(),
+				posts.getSize(),
+				posts.getTotalElements(),
+				posts.getTotalPages()
 				)
 				,HttpStatus.OK);
 	}

@@ -3,6 +3,7 @@ package com.squad8.dailypost.services;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.squad8.dailypost.models.dtos.SavePostDTO;
 import com.squad8.dailypost.models.entities.Post;
@@ -19,4 +20,5 @@ public interface PostService {
 	Page<Post> findAll(int page, int size);
 	void update(Post post, @Valid SavePostDTO info) throws Exception;
 	Page<Post> getPaginatedList(List<Post> list, int page, int size);
+	Page<Post> getLatestPosts(int page, int size);
 }
