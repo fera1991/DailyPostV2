@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import DailyPost_logo from '../../assets/img/DailyPost_logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -37,12 +37,21 @@ export default function Login() {
     }
   }
 
-  if (context.token) {
-    const userData = context.whoami();
-    if(userData){
-      navigate("/home")
+  const verifyUserToken = async () => {
+    try {
+    const userData = await context.whoami();
+    if (userData.username) {
+      console.log(userData.username);
+        navigate("/home")
+    }
+    } catch (error) {
+      
     }
   }
+
+  useEffect(() => {
+    verifyUserToken();
+  },[]);
 
   const { register, handleSubmit, } = useForm();
 
