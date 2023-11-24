@@ -99,9 +99,7 @@ export default function SavePost() {
             console.log("ejecutandose 3");
             setNum(num + 1);
             setPages(data.total_pages);
-            const newList = [...array, ...data.content];
-            console.log(newList);
-            setArray(newList);
+            setArray(data.content);
             }
         }
         else{
