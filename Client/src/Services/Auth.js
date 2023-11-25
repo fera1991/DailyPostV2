@@ -7,7 +7,6 @@ export const Auth = {
         try {
               
             const data = await axios.post(`${URL}/signin`,{username: user, password: password});
-              console.log(data);
             if(data.status === 200)
             {
                 return data.data
@@ -27,7 +26,6 @@ export const Auth = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
@@ -39,7 +37,6 @@ export const Auth = {
         try {
               
             const data = await axios.post(`${URL}/register`,{username: username, email: email, password: password});
-              console.log(data);
             if(data.status === 201)
             {
                 return data

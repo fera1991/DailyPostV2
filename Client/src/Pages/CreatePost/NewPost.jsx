@@ -38,7 +38,6 @@ const onSubmit = async (data) => {
   try {
     setLoanding(true);
     const url = await uploadFile(imageFile);
-    console.log(url);
     const info = await context.create(data.title,data.description,url);
     if (info) {
       setLoanding(false);

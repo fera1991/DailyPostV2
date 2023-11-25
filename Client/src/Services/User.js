@@ -12,7 +12,6 @@ export const User = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
@@ -29,7 +28,6 @@ export const User = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);
@@ -45,7 +43,6 @@ export const User = {
                 }
             }
             );
-            console.log(data);
             return data.data;
         } catch (error) {
             console.error(error);

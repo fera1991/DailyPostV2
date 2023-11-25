@@ -19,7 +19,6 @@ export const Post = {
         }
     },
     create: async (token,title,description,image) => {
-        console.log(token);
 
         try {
             const data = await axios.post(`${URL}/post/create`,{title: title,image: image,description: description},
@@ -39,7 +38,6 @@ export const Post = {
         }
     },
     update: async (token,title,description,image,id) => {
-        console.log(token);
 
         try {
             const data = await axios.put(`${URL}/post/update/${id}`,{title: title,image: image,description: description},
@@ -120,7 +118,7 @@ export const Post = {
     },
     favorite: async (token,id) => {
         try {
-            console.log(id);
+
             const data = await axios.patch(`${URL}/post/fav/${id}`,{},
             {
                 headers: {
