@@ -29,8 +29,7 @@ export default function SavePost() {
 
     const allData = async () => {
         setLoanding(true);
-        const data = await context.getAllOwn(num);
-        console.log(data.content);
+        const data = await context.getAllOwn(0);
         const response = await context.getAllFavoriteEntirety();
         if (response) {
             setArrayFavorite(response);
@@ -83,28 +82,21 @@ export default function SavePost() {
   }
 
     const pageBool = () => {
-        console.log(pages)
         return num < pages-1;
     }
 
     const addNewPosts = async () => {
-        console.log("ejecutandose 1", num, pages);
-        console.log(pageBool());
         if (pageBool()) {
-            setLoanding(true);
             message("Cargando Nuevos Posts");
-            console.log("ejecutandose 2");
             const data = await context.getAllOwn(num + 1);
             const response = await context.getAllFavoriteEntirety();
             if (response) {
                 setArrayFavorite(response);
             }
             if(data){
-            console.log("ejecutandose 3");
             setNum(num + 1);
             setPages(data.total_pages);
-            setArray(data.content);
-            setLoanding(false);
+            setArray([...array, ...data.content]);
             }
         }
         else{
