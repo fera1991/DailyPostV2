@@ -5,7 +5,6 @@ import PrincipalAdmin from './Pages/Principal/Home';
 import {BrowserRouter, Route,Routes} from 'react-router-dom';
 import Private from './Components/Private/Private';
 import NewPost from './Pages/CreatePost/NewPost';
-import Load from './Components/Load';
 
 import SavePost from './Pages/Principal/SavePost';
 import UpdatePost from './Pages/CreatePost/updatePost';
@@ -23,7 +22,6 @@ const App = () => (
       <Route path="/savePost" element={<SavePost/>}/>
       <Route path="/updatePost/:id" element={<UpdatePost/>}/>
       <Route path="/postMe" element={<PostMe/>}/>
-      <Route path="/load" element={<Load/>}/>
     </Routes>
   </BrowserRouter>
 

@@ -8,10 +8,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { uploadFile} from '../../firebase/config'
 import Swal from 'sweetalert2'
+import LoadingOverlay from "../../Components/LoadingOverlay";
 
 export default function NewPost() {
 const navigate = useNavigate();
 const context = useAPIContext(); 
+const [loading, setLoanding] = useState(false);
 const {
   register,
   handleSubmit,
@@ -34,14 +36,17 @@ const onSubmit = async (data) => {
   }
 
   try {
+    setLoanding(true);
     const url = await uploadFile(imageFile);
     console.log(url);
     const info = await context.create(data.title,data.description,url);
     if (info) {
+      setLoanding(false);
       Swal.fire("Publicación creada!");
       navigate("/home")
     }
     else {
+      setLoanding(false);
       console.log("Creacion fallido")
       Swal.fire({
         icon: "error",
@@ -52,6 +57,7 @@ const onSubmit = async (data) => {
     }
 
   } catch (error) {
+    setLoanding(false);
     console.error(error);
   }
 };
@@ -76,6 +82,7 @@ function previewImage(e) {
 
 return (
   <main>
+    { loading && <LoadingOverlay/>}
     <div className="container ml-auto mr-auto flex flex-wrap items-start mt-8 ">
       <div className="w-full pl-2 pr-2 mb-4 mt-4  ">
         <a className="text-3xl font-extrabold center flex items-center justify-center ">

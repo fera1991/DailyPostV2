@@ -1,5 +1,6 @@
 import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller} from 'react-hook-form';
+import { useState } from 'react';
 import DailyPost_logo from '../../assets/img/DailyPost_logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAPIContext } from "../../Context/Context";
 import Swal from 'sweetalert2';
+import LoadingOverlay from "../../Components/LoadingOverlay";
 
 // ... (importaciones y código previo)
 
@@ -14,6 +16,7 @@ export default function Checkin() {
     const { handleSubmit, control, setError } = useForm();
     const navigate = useNavigate();
     const context = useAPIContext();
+    const [loading, setLoanding] = useState(false);
 
     const onSubmit = async (data) => {
         const { username, email, password, confirmPassword } = data;
@@ -25,21 +28,17 @@ export default function Checkin() {
             });
             return;
         }
-        
+        setLoanding(true);
         const result = await context.register(username, email, password)
         console.log(result)
         if( result ){
             if(result.status === 201){
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Registro completado",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
+                setLoanding(false);
+                Swal.fire("Registro completado!!");
                 navigate('/');
             }
             if(result.status === 409){
+                setLoanding(false);
                 if(result.data.message === "Email already exists"){
                     Swal.fire({
                         icon: "error",
@@ -49,6 +48,7 @@ export default function Checkin() {
                     console.log("error");
                 }
                 if(result.data.message === "Username already exists"){
+                    setLoanding(false);
                     Swal.fire({
                         icon: "error",
                         title: "EL nombre de usuario ya existe",
@@ -59,6 +59,7 @@ export default function Checkin() {
             }
         }
         else{
+            setLoanding(false);
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -71,6 +72,7 @@ export default function Checkin() {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-purple-50">
+            { loading && <LoadingOverlay/>}
             <main className="bg-white max-w-md p-8 md:p-12 my-10 rounded-sm shadow-2xl m-4">
                 <img src={DailyPost_logo} alt="Daily Post" className="mx-auto mb-6" />
 

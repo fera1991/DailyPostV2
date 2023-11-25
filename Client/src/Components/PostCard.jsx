@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useAsyncError, useNavigate } from "react-router-dom";
 import { useAPIContext } from "../Context/Context";
 import Swal from "sweetalert2";
+import LoadingOverlay from "./LoadingOverlay";
 
 const PostCard = ({ post, listSaved, userLogin, archivePost }) => {
   const [likes, setLikes] = useState(0);
@@ -11,6 +12,7 @@ const PostCard = ({ post, listSaved, userLogin, archivePost }) => {
   const [showOptions, setShowOptions] = useState(false);
   const context = useAPIContext();
   const navigate = useNavigate();
+  const [loading, setLoanding] = useState(false);
 
   const searchAndActivate = async () => {
     const result = await context.getAllLikes(post.code);
@@ -34,10 +36,12 @@ const PostCard = ({ post, listSaved, userLogin, archivePost }) => {
   }, []);
 
   const handleLike = async () => {
+    setLoanding(true);
     const response = await context.likePost(post.code);
     if (response) {
       setLikes((prevLikes) => prevLikes + (isLiked ? -1 : 1));
       setIsLiked(!isLiked);
+      setLoanding(false);
     }
   };
 
@@ -50,9 +54,11 @@ const PostCard = ({ post, listSaved, userLogin, archivePost }) => {
   };
 
   const handleBookmark = async () => {
+    setLoanding(true);
     const response = await context.savePost(post.code);
     if (response) {
       setIsSaved(!isSaved);
+      setLoanding(false);
     }
   };
 
@@ -88,6 +94,7 @@ const PostCard = ({ post, listSaved, userLogin, archivePost }) => {
 
   const PrimaryCard = () => (
     <div className="container mx-auto px-5 post-card flex justify-center items-center">
+      { loading && <LoadingOverlay/>}
       <div
         className="flex items-center justify-center  px-6"
         style={{
@@ -260,11 +267,13 @@ const PostCard = ({ post, listSaved, userLogin, archivePost }) => {
     };
 
     const submitComment = async () => {
+      setLoanding(true);
       if (commentText.trim()) {
         const result = await context.saveComment(post.code, commentText.trim());
         if (result) {
           setComments((prevComments) => [...prevComments, result]);
           setCommentText("");
+          setLoanding(false);
         }
       }
     };
@@ -283,6 +292,7 @@ const PostCard = ({ post, listSaved, userLogin, archivePost }) => {
 
     return (
       <div className=" text-black post-card">
+        { loading && <LoadingOverlay/>}
         <div
           className="container relative mx-auto min-h-48 flex items-center justify-center p-5 px-6"
           style={{ padding: "20px" }}

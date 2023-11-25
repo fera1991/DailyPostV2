@@ -7,13 +7,15 @@ import UserList from '../UserList';
 import Swal from 'sweetalert2';
 
 
-export default function MenuAdmin({search}) {
+export default function MenuAdmin({search, realoadHome,realoadSave, realoadOwn}) {
     const context = useAPIContext();
     const [add, setAdd] = useState(false);
     const [bar, setBar] = useState(false);
     const [post, setPost] = useState('');
     const navigate = useNavigate();
 
+   
+   
 
     //Busqueda de usuario --->
     const onSearch = async () => {
@@ -62,7 +64,8 @@ export default function MenuAdmin({search}) {
     const [Save, setSave] = useState(false);
     const [Home, setHome] = useState(false);
     const [PostMe, setPostMe] = useState(false);
-    const [SearchMe, setSearchMe] = useState(false);
+
+    
 
     useEffect(() => {
         // Verificar si la ruta actual es "/ejemplo"
@@ -142,7 +145,11 @@ export default function MenuAdmin({search}) {
                 </div>
                 <div className="items-center justify-between w-full md:flex md:w-auto md:order-1">
                     <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-                        <li>
+                        <li onClick={()=>{
+                            if(Home){
+                                realoadHome();
+                            }
+                        }}>
                         <Link to="/home"
                                     href="#"
                                     className={` ${Home
@@ -167,7 +174,11 @@ export default function MenuAdmin({search}) {
                             </Link>
                         </li>
 
-                        <li>
+                        <li onClick={()=>{
+                            if(Save){
+                                realoadSave();
+                            }
+                        }}>
                                 <Link to="/savePost"
                                     href="#"
                                     className={` ${Save
@@ -191,7 +202,11 @@ export default function MenuAdmin({search}) {
                                     </svg>
                                 </Link>
                         </li>
-                        <li>
+                        <li onClick={()=>{
+                            if(PostMe){
+                                realoadOwn();
+                            }
+                        }}>
                                 <Link to="/postMe"
                                     className={` ${PostMe
                                         ? 'text-xl block py-2 px-3 text-black bg-purple-100 rounded md:bg-transparent md:text-purple-50 md:p-0 md:dark:text-black'

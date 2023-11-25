@@ -7,14 +7,16 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Swal from 'sweetalert2'
+import LoadingOverlay from "../../Components/LoadingOverlay";
 
 export default function Login() {
 
   const context = useAPIContext();
   const navigate = useNavigate();
   const [Error, setError] = useState(false);
-
+  const [loading, setLoanding] = useState(false);
   const onSubmit = async (data, e) => {
+    setLoanding(true);
     e.preventDefault();
     e.target.reset();
 
@@ -22,10 +24,12 @@ export default function Login() {
     console.log(data.user, data.password);
     const info = await context.login(data.user, data.password);
     if (info) {
+      setLoanding(false);
       console.log("loggeo completado")
       navigate("/home")
     }
     else {
+      setLoanding(false);
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -58,6 +62,7 @@ export default function Login() {
   return (
 
     <div className="flex justify-center items-center min-h-screen bg-purple-50 px-4">
+       { loading && <LoadingOverlay/>}
       <main className="bg-white w-full max-w-md p-6 rounded-lg shadow-xl">
         <img src={DailyPost_logo} alt="Daily Post" className="mx-auto w-32 md:w-48"></img>
         <h2 className="text-gray-700 text-lg md:text-xl text-center mt-4 mb-6">Inicie sesión en su cuenta</h2>

@@ -107,7 +107,7 @@ export default function Post() {
 
     return (
         <>
-            <MenuAdmin search={search}/>
+            <MenuAdmin search={search} realoadHome={allData}/>
 
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
 

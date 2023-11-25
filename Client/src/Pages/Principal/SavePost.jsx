@@ -107,7 +107,7 @@ export default function SavePost() {
 
     return (
         <>
-            <MenuAdmin/>
+            <MenuAdmin realoadSave={allData}/>
 
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
                 <div className='mt-20'>

@@ -6,6 +6,7 @@ import { Link, useNavigate ,useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { uploadFile} from '../../firebase/config'
 import Swal from 'sweetalert2';
+import LoadingOverlay from "../../Components/LoadingOverlay";
 
 export default function UpdatePost() {
 
@@ -13,7 +14,7 @@ const context = useAPIContext();
 const navigate = useNavigate();
 const { id } = useParams();
 const [post, setPost] = useState(null);
-
+const [loading, setLoanding] = useState(false);
 const {
   register,
   setValue, 
@@ -33,6 +34,7 @@ const onSubmit = async (data) => {
   }
 
   try {
+    setLoanding(true);
     let url = "";
     if(imageFile){
       url = await uploadFile(imageFile);
@@ -43,10 +45,12 @@ const onSubmit = async (data) => {
     }
     const info = await context.update(data.title,data.description,url,post.code);
     if (info) {
+      setLoanding(false);
       Swal.fire("Publicación actualizada!");
       navigate("/home")
     }
     else {
+      setLoanding(false);
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -57,6 +61,7 @@ const onSubmit = async (data) => {
     }
 
   } catch (error) {
+    setLoanding(false);
     console.error(error);
   }
 };
@@ -64,6 +69,7 @@ const onSubmit = async (data) => {
  useEffect(() => {
     const fetchPostDetails = async () => {
       try {
+        setLoanding(true);
         const postDetails = await context.findOne(id);
         console.log(postDetails);
         // Inicializa los campos del formulario con los datos obtenidos
@@ -72,9 +78,11 @@ const onSubmit = async (data) => {
         const preview = document.getElementById('image-preview');
         preview.src = postDetails.image;
         setPost(postDetails);
+        setLoanding(false);
         // Puedes agregar más campos según sea necesario
       } catch (error) {
         console.error('Error al obtener detalles del post:', error);
+        setLoanding(false);
       }
     };
 
@@ -101,6 +109,7 @@ function previewImage(e) {
 
 return (
   <main>
+     { loading && <LoadingOverlay/>}
     <div className="container ml-auto mr-auto flex flex-wrap items-start mt-8 ">
       <div className="w-full pl-2 pr-2 mb-4 mt-4  ">
         <a className="text-3xl font-extrabold center flex items-center justify-center ">
