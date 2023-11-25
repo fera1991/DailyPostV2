@@ -4,13 +4,14 @@ import PostCard from '../../Components/PostCard';
 import { useState, useEffect } from "react";
 import { useAPIContext } from "../../Context/Context";
 import Swal from 'sweetalert2';
+import LoadingOverlay from "../../Components/LoadingOverlay";
 
 // import { render } from '@testing-library/react';
 // import { set } from 'react-hook-form';
 
 
 export default function SavePost() {
-
+    const [loading, setLoanding] = useState(false);
     const [Options, setOptions] = useState(false);
     const [userOptions, setUserOptions] = useState(false);
     const context = useAPIContext();
@@ -27,6 +28,7 @@ export default function SavePost() {
     }
 
     const allData = async () => {
+        setLoanding(true);
         const data = await context.getAllOwn(num);
         console.log(data.content);
         const response = await context.getAllFavoriteEntirety();
@@ -37,6 +39,7 @@ export default function SavePost() {
         setUser(userData);
         setPages(data.total_pages);
         setArray(data.content)
+        setLoanding(false);
     }
 
     useEffect(() => {
@@ -88,6 +91,7 @@ export default function SavePost() {
         console.log("ejecutandose 1", num, pages);
         console.log(pageBool());
         if (pageBool()) {
+            setLoanding(true);
             message("Cargando Nuevos Posts");
             console.log("ejecutandose 2");
             const data = await context.getAllOwn(num + 1);
@@ -100,6 +104,7 @@ export default function SavePost() {
             setNum(num + 1);
             setPages(data.total_pages);
             setArray(data.content);
+            setLoanding(false);
             }
         }
         else{
@@ -118,7 +123,7 @@ export default function SavePost() {
     return (
         <>
             <MenuAdmin realoadOwn={allData}/>
-
+            { loading && <LoadingOverlay/>}
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
 
                 <div className='mt-20'>

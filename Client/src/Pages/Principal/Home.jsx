@@ -4,6 +4,7 @@ import PostCard from '../../Components/PostCard';
 import { useState, useEffect } from "react";
 import { useAPIContext } from "../../Context/Context";
 import Swal from 'sweetalert2';
+import LoadingOverlay from "../../Components/LoadingOverlay";
 // import { render } from '@testing-library/react';
 // import { set } from 'react-hook-form';
 
@@ -16,8 +17,10 @@ export default function Post() {
     const [num, setNum] = useState(0);
     const [pages, setPages] = useState(0);
     const [user, setUser] = useState(null);
+    const [loading, setLoanding] = useState(false);
 
     const allData = async () => {
+        setLoanding(true);
         const data = await context.getAll(0);
         const response = await context.getAllFavoriteEntirety();
         if (response) {
@@ -29,6 +32,7 @@ export default function Post() {
         if(data){
             setPages(data.total_pages);
             setArray(data.content);
+            setLoanding(false);
         }
     }
 
@@ -108,7 +112,7 @@ export default function Post() {
     return (
         <>
             <MenuAdmin search={search} realoadHome={allData}/>
-
+            { loading && <LoadingOverlay/>}
             <div className="flex flex-col justify-center items-center min-h-screen bg-purple-50">
 
                 <div className='mt-20'>

@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAPIContext } from '../../Context/Context';
 import UserList from '../UserList';
 import Swal from 'sweetalert2';
-
+import LoadingOverlay from "../../Components/LoadingOverlay";
 
 export default function MenuAdmin({search, realoadHome,realoadSave, realoadOwn}) {
     const context = useAPIContext();
@@ -13,16 +13,18 @@ export default function MenuAdmin({search, realoadHome,realoadSave, realoadOwn})
     const [bar, setBar] = useState(false);
     const [post, setPost] = useState('');
     const navigate = useNavigate();
-
+    const [loading, setLoanding] = useState(false);
    
    
 
     //Busqueda de usuario --->
     const onSearch = async () => {
+        setLoanding(true);
         const userList = await context.findAllByUsername(post);
         console.log(userList);
         setUserList(userList);
         setShowUserList(true);
+        setLoanding(false);
     }
 
     const handleBlur = () => {
@@ -103,11 +105,13 @@ export default function MenuAdmin({search, realoadHome,realoadSave, realoadOwn})
     const [userList, setUserList] = useState([]);
 
     const handleUserClick = async (username) => {
+        setLoanding(true);
         const response = await context.findAllPostByUser(username);
         console.log(response);
         if(response){
             search(response);
         }
+        setLoanding(false);
     };
 
     const closeUserList = () => {
@@ -118,6 +122,7 @@ export default function MenuAdmin({search, realoadHome,realoadSave, realoadOwn})
 
     return (
         <nav className={`bg-white dark:bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-purple-50 ${!showMenu && 'hidden'}`}>
+            { loading && <LoadingOverlay/>}
             <div className="flex flex-wrap items-center object-center justify-between mx-auto p-4">
                 <a className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src={DailyPost_logo} className="h-12" alt="Logo" />
