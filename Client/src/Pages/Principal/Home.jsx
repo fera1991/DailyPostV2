@@ -66,13 +66,7 @@ export default function Post() {
     })
 
     const message = (data) => {
-          Swal.fire({
-            position: "top-end",
-            icon: "info",
-            title: data,
-            showConfirmButton: false,
-            timer: 1500
-          });
+        Swal.fire(data);
     }
 
     const pageBool = () => {
@@ -90,7 +84,7 @@ export default function Post() {
             if(data){
                 setNum(num + 1);
                 setPages(data.total_pages);
-                setArray(data.content);
+                setArray([...array, ...data.content]);
             }
         }
         else{

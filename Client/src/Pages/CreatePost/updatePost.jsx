@@ -26,7 +26,6 @@ const [imageFile, setImageFile] = useState(null);
 
 const onSubmit = async (data) => {
   const {title, description } = data;
-  console.log(data);
 
   if (!title || !description) {
     console.error('Asegúrate de completar todos los campos.');
@@ -38,7 +37,6 @@ const onSubmit = async (data) => {
     let url = "";
     if(imageFile){
       url = await uploadFile(imageFile);
-      console.log(url);
     }
     else{
       url =  post.image;
@@ -71,7 +69,6 @@ const onSubmit = async (data) => {
       try {
         setLoanding(true);
         const postDetails = await context.findOne(id);
-        console.log(postDetails);
         // Inicializa los campos del formulario con los datos obtenidos
         setValue('title', postDetails.title);
         setValue('description', postDetails.description);

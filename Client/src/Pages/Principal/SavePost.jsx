@@ -24,10 +24,8 @@ export default function SavePost() {
 
     const allData = async () => {
         setLoanding(true);
-        const data = await context.getAllFavorite(num);
-        console.log(data.content);
+        const data = await context.getAllFavorite(0);
         const response = await context.getAllFavoriteEntirety();
-        console.log(response);
         if (response) {
             setArrayFavorite(response);
         }
@@ -43,7 +41,7 @@ export default function SavePost() {
         const username = "";
         setUserOptions(username);
         allData();
-    }, [num]);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -85,7 +83,6 @@ export default function SavePost() {
 
     const addNewPosts = async () => {
         if (pageBool()) {
-            setLoanding(true);
             message("Cargando Nuevos Posts");
             const data = await context.getAllFavorite(num + 1);
             const response = await context.getAllFavoriteEntirety();
@@ -95,8 +92,7 @@ export default function SavePost() {
             if(data){
             setNum(num + 1);
             setPages(data.total_pages);
-            setArray(data.content);
-            setLoanding(false);
+            setArray([...array, ...data.content]);
             }
         }
         else{

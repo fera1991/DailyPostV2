@@ -30,7 +30,6 @@ export default function Checkin() {
         }
         setLoanding(true);
         const result = await context.register(username, email, password)
-        console.log(result)
         if( result ){
             if(result.status === 201){
                 setLoanding(false);
