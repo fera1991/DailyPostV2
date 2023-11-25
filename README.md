@@ -20,3 +20,6 @@ Explora, comparte, aprende y crece junto a una comunidad que valora cada paso de
 
 ## Documentacion API
 - #### [API DAILY POST](https://documenter.getpostman.com/view/21210342/2s9YeD8Ycq)
+
+## Enlace a Daily Post
+- Visita [Daily Post](https://daily-post-v2.vercel.app/) para explorar la plataforma.
