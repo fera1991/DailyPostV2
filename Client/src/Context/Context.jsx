@@ -37,7 +37,10 @@ export const APIProvider = (prop) => {
             {
                 localStorage.setItem("TOKEN",data.token);
                 setToken(data.token);
-        
+                const user = whoami();
+                if(user){
+                    setUsername(user);
+                }
                 return true
             }
             return false;

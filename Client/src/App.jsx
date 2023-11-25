@@ -15,13 +15,13 @@ const App = () => (
   <BrowserRouter>
     <Routes>
       <Route path ="/" element={ <Login/> }/>
-      <Route path="/checkin" element={ <Checkin/>}/>
-      <Route path="/newpost" element={ <NewPost/>}/>
-      <Route path ="/home" element={ <PrincipalAdmin/> }/>
-      <Route path="/404" element={<Private/>}/>
-      <Route path="/savePost" element={<SavePost/>}/>
-      <Route path="/updatePost/:id" element={<UpdatePost/>}/>
-      <Route path="/postMe" element={<PostMe/>}/>
+      <Route path="/checkin" element={<Checkin/>}/>
+      <Route path="/newpost" element={<Private><NewPost/> </Private>}/>
+      <Route path ="/home" element={<Private> <PrincipalAdmin/> </Private>}/>
+      <Route path="*" element={<Private/>}/>
+      <Route path="/savePost" element={<Private><SavePost/></Private>}/>
+      <Route path="/updatePost/:id" element={<Private><UpdatePost/></Private>}/>
+      <Route path="/postMe" element={<Private><PostMe/></Private>}/>
     </Routes>
   </BrowserRouter>
 

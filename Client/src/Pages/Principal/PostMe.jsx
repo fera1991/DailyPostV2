@@ -128,7 +128,7 @@ export default function SavePost() {
 
                 <div className='mt-20'>
                     {array.map((data) => {
-                        return <PostCard key={data.code} post={data} listSaved={arrayFavorite} userLogin={user} archivePost={archivePost}/>;
+                        return <PostCard key={data.code} post={data} listSaved={arrayFavorite} userLogin={user} />;
                     })}
                 </div>
 
