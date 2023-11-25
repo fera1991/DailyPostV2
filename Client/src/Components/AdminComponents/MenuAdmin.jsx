@@ -62,6 +62,7 @@ export default function MenuAdmin({search}) {
     const [Save, setSave] = useState(false);
     const [Home, setHome] = useState(false);
     const [PostMe, setPostMe] = useState(false);
+    const [SearchMe, setSearchMe] = useState(false);
 
     useEffect(() => {
         // Verificar si la ruta actual es "/ejemplo"
@@ -213,10 +214,12 @@ export default function MenuAdmin({search}) {
                                     </svg>
                                 </Link>
                         </li>
+                        { Home && 
                         <li>
                             <div
                                 className="relative mb-1"
                                 data-te-input-wrapper-init
+                            
                             >
                                 <input
                                     type="search"
@@ -237,7 +240,7 @@ export default function MenuAdmin({search}) {
                                     <UserList users={userList} onItemClick={handleUserClick} onClose={closeUserList} />
                                 )}
                             </div>
-                        </li>
+                        </li>}
                     </ul>
                 </div>
             </div>
