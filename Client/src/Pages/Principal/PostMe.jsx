@@ -72,13 +72,7 @@ export default function SavePost() {
     })
 
     const message = (data) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "info",
-          title: data,
-          showConfirmButton: false,
-          timer: 1500
-        });
+        Swal.fire(data);
   }
 
     const pageBool = () => {
