@@ -109,7 +109,7 @@ return (
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="title"
                   type="text"
-                  {...register('title', { required: true, minLength: 5, maxLength: 20 })}
+                  {...register('title', { required: true, minLength: 5, maxLength: 35 })}
                 />
                 {errors.title && (
                   <p className="text-red-500 text-xs italic">
@@ -119,7 +119,7 @@ return (
                   {errors.title.type === 'minLength' &&
                     'La longitud mínima es de 5 caracteres.'}
                   {errors.title.type === 'maxLength' &&
-                    'La longitud máxima es de 20 caracteres.'}
+                    'La longitud máxima es de 35 caracteres.'}
                 </p>
                 )}
               </div>
